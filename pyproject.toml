@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "job-finder"
+version = "0.1.0"
+description = "자동 이메일 발송 테스트"
+authors = ["강경모 <yourmail@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
