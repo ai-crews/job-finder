@@ -1,4 +1,41 @@
-- name: 🧭 현재 위치와 파일 확인
-  run: |
-    pwd
-    ls -al
+name: Send Email with Secrets
+
+on: [push, pull_request]
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ✅ 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python 3.12 설치
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: 📦 Poetry 설치
+        run: pip install poetry
+
+      - name: 🧭 현재 위치와 파일 확인
+        run: |
+          pwd
+          ls -al
+          echo "-------"
+          ls -al ./job-finder || echo "job-finder 폴더 없음"
+          echo "-------"
+          ls -al ./ || echo "루트 디렉토리 확인"
+
+      - name: 📦 의존성 설치
+        working-directory: ./  # 또는 job-finder 폴더명 정확히 지정
+        run: poetry install
+
+      - name: 🔐 GitHub Secrets를 .env로 저장
+        run: |
+          echo "SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}" >> .env
+          echo "RECEIVER_EMAIL=${{ secrets.RECEIVER_EMAIL }}" >> .env
+          echo "EMAIL_PW=${{ secrets.EMAIL_PW }}" >> .env
+
+      - name: ✉️ 이메일 발송 스크립트 실행
+        run: poetry run python email_sender.py
