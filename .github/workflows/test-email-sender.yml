@@ -22,13 +22,8 @@ jobs:
         run: |
           pwd
           ls -al
-          echo "-------"
-          ls -al ./job-finder || echo "job-finder 폴더 없음"
-          echo "-------"
-          ls -al ./ || echo "루트 디렉토리 확인"
 
       - name: 📦 의존성 설치
-        working-directory: ./  # 또는 job-finder 폴더명 정확히 지정
         run: poetry install
 
       - name: 🔐 GitHub Secrets를 .env로 저장
