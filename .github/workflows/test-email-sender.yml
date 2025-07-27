@@ -7,28 +7,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout 코드 받기
+      - name: ✅ 코드 체크아웃
         uses: actions/checkout@v4
 
-      - name: Python 3.12 설치
+      - name: 🐍 Python 3.12 설치
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      - name: Poetry 설치
-        run: |
-          pip install poetry
+      - name: 📦 Poetry 설치
+        run: pip install poetry
 
-      - name: pyproject.toml 기반 의존성 설치
-        run: |
-          poetry install
+      - name: 📁 현재 디렉토리 확인 (디버깅용)
+        run: pwd
 
-      - name: GitHub Secrets를 .env로 저장
+      - name: 📦 의존성 설치
+        working-directory: .
+        run: poetry install
+
+      - name: 🔐 GitHub Secrets를 .env로 저장
+        working-directory: .
         run: |
           echo "SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}" >> .env
           echo "RECEIVER_EMAIL=${{ secrets.RECEIVER_EMAIL }}" >> .env
           echo "EMAIL_PW=${{ secrets.EMAIL_PW }}" >> .env
 
-      - name: 이메일 발송 스크립트 실행
-        run: |
-          poetry run python email_sender.py
+      - name: ✉️ 이메일 발송 스크립트 실행
+        working-directory: .
+        run: poetry run python email_sender.py
