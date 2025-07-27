@@ -19,7 +19,7 @@ jobs:
         run: |
           pip install poetry
 
-      - name: 의존성 설치 (pyproject.toml 기반)
+      - name: pyproject.toml 기반 의존성 설치
         run: |
           poetry install
 
