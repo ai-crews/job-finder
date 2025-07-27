@@ -1,9 +1,9 @@
-name: Email Sender Code Check
+name: Send Email with Secrets
 
 on: [push, pull_request]
 
 jobs:
-  test-email-script:
+  send-email:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,16 +19,16 @@ jobs:
         run: |
           pip install poetry
 
-      - name: 패키지 설치
+      - name: 의존성 설치 (pyproject.toml 기반)
         run: |
           poetry install
 
-      - name: 가짜 환경변수 설정 (.env 생성)
+      - name: GitHub Secrets를 .env로 저장
         run: |
-          echo "SENDER_EMAIL=test@example.com" >> .env
-          echo "RECEIVER_EMAIL=test@example.com" >> .env
-          echo "EMAIL_PW=dummy_password" >> .env
+          echo "SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}" >> .env
+          echo "RECEIVER_EMAIL=${{ secrets.RECEIVER_EMAIL }}" >> .env
+          echo "EMAIL_PW=${{ secrets.EMAIL_PW }}" >> .env
 
-      - name: email_sender.py 실행 확인
+      - name: 이메일 발송 스크립트 실행
         run: |
-          python email_sender.py || echo "에러 무시하고 코드 실행만 확인"
+          poetry run python email_sender.py
