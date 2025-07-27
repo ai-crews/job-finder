@@ -1,37 +1,35 @@
 name: Send Email with Secrets
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ✅ 코드 체크아웃
+      - name: ✅ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 🐍 Python 3.12 설치
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      - name: 📦 Poetry 설치
+      - name: 📦 Install Poetry
         run: pip install poetry
 
-      - name: 📁 현재 디렉토리 확인 (디버깅용)
-        run: pwd
-
-      - name: 📦 의존성 설치
-        working-directory: .
+      - name: 📁 Install dependencies
         run: poetry install
 
-      - name: 🔐 GitHub Secrets를 .env로 저장
-        working-directory: .
+      - name: 🔐 Setup .env with secrets
         run: |
           echo "SENDER_EMAIL=${{ secrets.SENDER_EMAIL }}" >> .env
           echo "RECEIVER_EMAIL=${{ secrets.RECEIVER_EMAIL }}" >> .env
           echo "EMAIL_PW=${{ secrets.EMAIL_PW }}" >> .env
 
-      - name: ✉️ 이메일 발송 스크립트 실행
-        working-directory: .
+      - name: ✉️ Send test email
         run: poetry run python email_sender.py
