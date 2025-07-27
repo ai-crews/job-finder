@@ -18,7 +18,7 @@ jobs:
       - name: 📦 Poetry 설치
         run: pip install poetry
 
-      - name: 🧭 현재 위치와 파일 확인
+      - name: 🧭 현재 위치와 파일 확인 (디버깅용)
         run: |
           pwd
           ls -al
