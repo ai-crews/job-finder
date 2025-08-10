@@ -210,3 +210,4 @@ __marimo__/
 #Gmail API 이메일 발송
 credentials.json
 token.json
+service_account.json
