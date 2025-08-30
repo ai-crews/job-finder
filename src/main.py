@@ -1,3 +1,4 @@
+# main.py
 from services.email_service import send_emails
 from services.sheets_service import load_recipients_from_sheet, write_status_to_sheet
 from dotenv import load_dotenv
@@ -7,11 +8,12 @@ load_dotenv()
 
 
 def main():
-    print("=== Gmail API 이메일 발송 테스트 (Google Sheets 연동) ===")
+    print("=== SMTP 이메일 발송 테스트 (Google Sheets 연동) ===")
 
     # 구글 시트 정보
     SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
-    WORKSHEET_NAME = os.getenv("WORKSHEET_NAME")
+    WORKSHEET_NAME = os.getenv("WORKSHEET_NAME", "Sheet1")
+
     # 시트에서 수신자 읽기
     email_list, sh, ws = load_recipients_from_sheet(SPREADSHEET_ID, WORKSHEET_NAME)
     if not email_list:
@@ -32,7 +34,6 @@ def main():
     # 시트에 결과 기록
     try:
         if ws is not None:
-            # 다시 records를 가져와서 상태 업데이트
             records = ws.get_all_records()
             write_status_to_sheet(ws, records, results)
             print("시트에 발송 결과를 기록했습니다.")

@@ -1,37 +1,43 @@
-from auth.gmail_auth import authenticate_gmail
-from utils.message_builder import create_message, load_html_template
-
-
-def send_message(service, user_id, message):
-    """이메일 발송"""
-    try:
-        result = service.users().messages().send(userId=user_id, body=message).execute()
-        print(f'이메일이 성공적으로 발송되었습니다! Message ID: {result["id"]}')
-        return result
-    except Exception as error:
-        print(f"이메일 발송 중 오류가 발생했습니다: {error}")
-        return None
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+import os
+from utils.message_builder import load_html_template
+from .smtp_email_service import SMTPEmailService
 
 
 def send_emails(
     email_list, subject, message_text=None, html_file_path=None, attachment_path=None
 ):
     """대량 이메일 발송"""
-    service = authenticate_gmail()
-    sender_email = "me"
+    # 환경변수에서 SMTP 설정 읽기
+    smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
+    smtp_port = int(os.getenv("SMTP_PORT", "587"))
+    sender_email = os.getenv("SENDER_EMAIL")
+    sender_password = os.getenv("SENDER_PASSWORD")
 
+    if not sender_email or not sender_password:
+        raise ValueError("SENDER_EMAIL과 SENDER_PASSWORD 환경변수를 설정해주세요.")
+
+    # SMTP 서비스 초기화
+    email_service = SMTPEmailService(
+        smtp_server, smtp_port, sender_email, sender_password
+    )
+
+    # HTML 템플릿 로드
     html_content = None
     if html_file_path:
         html_content = load_html_template(html_file_path)
 
     success_count = 0
     fail_count = 0
-    results_map = {}  # {email: ("SUCCESS"/"FAIL", message_id_or_error)}
+    results_map = {}  # {email: ("SUCCESS"/"FAIL", error_message)}
 
     for email in email_list:
         try:
-            message = create_message(
-                sender=sender_email,
+            result = email_service.send_message(
                 to=email,
                 subject=subject,
                 message_text=message_text,
@@ -39,15 +45,12 @@ def send_emails(
                 attachment_path=attachment_path,
             )
 
-            result = send_message(service, "me", message)
-            if result:
+            if result["status"] == "SUCCESS":
                 success_count += 1
-                print(f"✅ {email}에게 발송 완료")
-                results_map[email] = ("SUCCESS", result.get("id", ""))
+                results_map[email] = ("SUCCESS", "")
             else:
                 fail_count += 1
-                print(f"❌ {email} 발송 실패")
-                results_map[email] = ("FAIL", "no_result")
+                results_map[email] = ("FAIL", result.get("error", "Unknown error"))
 
         except Exception as e:
             fail_count += 1
