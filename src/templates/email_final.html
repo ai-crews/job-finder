@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JOB FINDER 채용공고</title>
+    <style>
+      /* 이메일 클라이언트 호환성을 위한 기본 스타일 */
+      body {
+        font-family: Arial, "Malgun Gothic", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      table {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      .email-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+      }
+
+      .header {
+        background: #006c14;
+        padding: 25px 20px 20px 20px;
+        color: white;
+      }
+
+      .header h1 {
+        color: #ffc93e;
+        font-size: 22px;
+        margin: 0 0 10px 0;
+        font-weight: bold;
+        line-height: 1.3;
+      }
+
+      .header p {
+        margin: 0 0 15px 0;
+        font-size: 15px;
+        line-height: 1.4;
+      }
+
+      .date {
+        text-align: right;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .section-title {
+        color: #6d6d6d;
+        font-size: 17px;
+        margin: 0 0 20px 0;
+        line-height: 1.4;
+      }
+
+      .job-listing {
+        border: 1px solid #eeeeee;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 0 0 15px 0;
+        background: #fafafa;
+      }
+
+      .job-header {
+        width: 100%;
+      }
+
+      .job-header table {
+        width: 100%;
+      }
+
+      .company-logo {
+        width: 70px;
+        height: 70px;
+        background: #e0e0e0;
+        border-radius: 6px;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 11px;
+        color: #666;
+        line-height: 70px;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .company-logo img {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 6px;
+        display: block;
+      }
+
+      .job-info {
+        vertical-align: top;
+        padding-left: 15px;
+      }
+
+      .company-name {
+        font-weight: bold;
+        font-size: 16px;
+        margin: 0 0 8px 0;
+        color: #000;
+      }
+
+      .star {
+        color: gold;
+        margin-right: 5px;
+      }
+
+      .job-detail-row {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .job-label {
+        color: #444444;
+        font-size: 14px;
+        font-weight: normal;
+        min-width: 70px;
+        flex-shrink: 0;
+      }
+
+      .job-value {
+        color: #000;
+        font-size: 14px;
+        flex: 1;
+        word-wrap: break-word;
+        line-height: 1.4;
+      }
+
+      .tag {
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-right: 5px;
+        display: inline-block;
+      }
+
+      .tag-entry {
+        background: #bdf4ff;
+        color: #000;
+      }
+
+      .tag-fulltime {
+        background: #eaffce;
+        color: #07632b;
+      }
+
+      .tag-intern {
+        background: #fff0ae;
+        color: #5e2e00;
+      }
+
+      .job-header {
+        width: 100%;
+      }
+
+      .apply-btn {
+        background: #f9fafc;
+        border: 1px solid #e3e8ef;
+        border-radius: 6px;
+        padding: 12px;
+        color: #2e2e2e;
+        text-decoration: none;
+        font-size: 14px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 15px;
+        box-sizing: border-box;
+        font-weight: 500;
+      }
+
+      .apply-btn:hover {
+        background: #e9ecef;
+        border-color: #d1d9e6;
+      }
+
+      .feedback-section {
+        background: #f9fafc;
+        border: 1px solid #e3e8ef;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 25px 0;
+        text-align: center;
+      }
+
+      .feedback-header {
+        background: #1ba534;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 12px;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .testimonial {
+        font-style: italic;
+        color: #333;
+        line-height: 1.5;
+        margin: 12px 0;
+        font-size: 14px;
+      }
+
+      .feedback-btn {
+        background: #2e2e2e;
+        color: #eaffce;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        margin: 12px 0;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .links-section {
+        text-align: center;
+        margin: 15px 0 0 0;
+      }
+
+      .links-section a {
+        color: #666;
+        text-decoration: underline;
+        margin: 8px 0;
+        display: block;
+        font-size: 13px;
+      }
+
+      .footer {
+        background: #e8e8e8;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .footer-brand {
+        background: #006c14;
+        color: white;
+        padding: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        display: inline-block;
+        border-radius: 4px;
+      }
+
+      .footer-text {
+        color: #3e5f44;
+        font-size: 13px;
+        margin: 8px 0;
+      }
+
+      .footer-links {
+        font-size: 11px;
+        color: #666;
+        margin: 12px 0;
+        line-height: 1.4;
+      }
+
+      .footer-links a {
+        color: #666;
+        text-decoration: underline;
+      }
+
+      .unsubscribe {
+        font-size: 11px;
+        color: #666;
+        margin-top: 12px;
+      }
+
+      .unsubscribe a {
+        color: #666;
+        text-decoration: underline;
+      }
+
+      /* 모바일 반응형 */
+      @media only screen and (max-width: 480px) {
+        .email-container {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        
+        .header {
+          padding: 20px 15px !important;
+        }
+        
+        .content {
+          padding: 15px !important;
+        }
+        
+        .header h1 {
+          font-size: 20px !important;
+        }
+        
+        /* 모바일에서 회사 로고 숨기기 
+        .company-logo {
+          display: none !important;
+        }
+        
+        .job-info {
+          padding-left: 0 !important;
+        }
+        
+        테이블 구조 조정 
+        .job-header table tr td:first-child {
+          display: none !important;
+        } */
+      }
+    </style>
+  </head>
+  <body>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #f4f4f4;">
+      <tr>
+        <td align="center">
+          <div class="email-container">
+            <!-- 헤더 -->
+            <div class="header">
+              <h1>🎯 8월 4주차 채용공고 도착!</h1>
+              <p>''바로가기'를 누르면 자세한 정보를 볼 수 있어요!</p>
+              <div class="date">2025.08.31</div>
+            </div>
+
+            <!-- 본문 -->
+            <div class="content">
+              <div class="section-title">
+                000님에게 가장 적합한 채용공고<br />
+                <small>(⭐️이 표시된 공고는 사용자님의 수신희망기업이에요!)</small>
+              </div>
+
+              <!-- 채용공고 1 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/woowa-logo.png" alt="우아한형제들 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='우아한형제들';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">
+                          <span class="star">⭐️</span>우아한형제들
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">딜리버리센터 Business Analyst 모집</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-fulltime">정규직</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 채용공고 2 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/image14.png" alt="쿠팡 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='쿠팡';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">
+                          <span class="star">⭐️</span>쿠팡
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">Business Analyst 인턴 모집</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-intern">인턴</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 채용공고 3 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/image12.png" alt="토스뱅크 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='토스뱅크';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">토스뱅크</div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">데이터 애널리틱스 엔지니어</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-fulltime">정규직</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 채용공고 4 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/lg-logo.png" alt="LG전자 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='LG전자';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">LG전자</div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">[해외영업본부] B2B data 분석</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-intern">인턴</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 채용공고 5 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/kakao-logo.png" alt="카카오 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='카카오';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">카카오</div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">데이터 분석가 (채용연계형 인턴)</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-intern">인턴</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 채용공고 6 -->
+              <div class="job-listing">
+                <div class="job-header">
+                  <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td class="company-logo">
+                        <img src="images/samsung-logo.png" alt="삼성카드 로고" 
+                             onerror="this.style.display='none'; this.parentNode.innerHTML='삼성카드';" />
+                      </td>
+                      <td class="job-info">
+                        <div class="company-name">삼성카드</div>
+                        <div class="job-detail-row">
+                          <span class="job-label">공고명</span>
+                          <span class="job-value">2025년 하반기 3급 신입사원 채용 공고</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">고용형태</span>
+                          <span class="tag tag-entry">신입</span>
+                          <span class="tag tag-fulltime">정규직</span>
+                        </div>
+                        <div class="job-detail-row">
+                          <span class="job-label">접수마감</span>
+                          <span class="job-value">~25년 8월 30일 (D-9)</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <a href="#" class="apply-btn">바로가기</a>
+              </div>
+
+              <!-- 피드백 섹션 -->
+              <div class="feedback-section">
+                <div class="feedback-header">Hoper의 한마디!</div>
+                <div class="testimonial">
+                  "한 눈에 볼 수 있는 서비스였어요!" -000님-<br />
+                  서비스 이용하면서 한 눈에 저에게 맞는 공고를 확인할 수 있어서<br />
+                  빠르게 지원할 수 있었어요! 저처럼 귀찮은 분들한테 딱이에요!
+                </div>
+              </div>
+
+                              <a href="#" class="feedback-btn">받아 본 채용공고가 어떠셨나요?</a>
+                <div style="margin-top: 15px; font-size: 13px; line-height: 1.4;">
+                  여러분의 이용 후기를 들려주세요! Hoper 분들의 의견을 반영하여<br />
+                  서비스 업데이트에 노력을 기울이겠습니다.
+                </div>
+                <div class="links-section">
+                  <a href="#">서비스 피드백하러 가기</a>
+                  <a href="#">JOB FINDER 친구에게 추천하기</a>
+                  <a href="#">JOB FINDER 공식 페이지</a>
+                </div>
+            </div>
+
+            <!-- 푸터 -->
+            <div class="footer">
+              <div class="footer-brand">JOB FINDER</div>
+              <div class="footer-text">든든한 취준친구 JOB FINDER</div>
+
+              <div class="footer-links">
+                <a href="#">구독정보 변경하기</a> | <a href="#">FAQ</a><br />
+                <a href="#">JOB FINDER를 만든 AI CREWS 알아보기</a>
+              </div>
+
+              <div class="unsubscribe">
+                <a href="#">수신거부 😭</a>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
