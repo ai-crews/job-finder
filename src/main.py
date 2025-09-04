@@ -23,7 +23,7 @@ def main():
     print(f"발송 대상: {len(email_list)}명")
 
     # 발송
-    html_file = "templates/email.html"
+    html_file = "templates/email_final.html"
     results = send_emails(
         email_list=email_list,
         subject="이메일 발송 테스트",
