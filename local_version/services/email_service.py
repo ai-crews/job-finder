@@ -19,6 +19,18 @@ class SMTPEmailService:
         self.password = password
         self.template = EmailTemplate()
 
+    @classmethod
+    def from_config(cls):
+        """설정에서 이메일 서비스 인스턴스 생성"""
+        from config.email_config import EmailConfig
+
+        return cls(
+            EmailConfig.SMTP_SERVER,
+            EmailConfig.SMTP_PORT,
+            EmailConfig.EMAIL_ADDRESS,
+            EmailConfig.EMAIL_PASSWORD,
+        )
+
     def create_message(
         self,
         to,
