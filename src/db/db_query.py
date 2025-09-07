@@ -14,6 +14,21 @@ class EmailQueries:
         WHERE consent = 'Y'
     """
 
+    # 이메일 발송 로그 삽입
+    INSERT_EMAIL_LOG = """
+        INSERT INTO email_send_logs 
+        (user_id, user_email, email_subject, email_type, status, error_message, recommended_jobs_count) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """
+
+    # 최근 이메일 발송 로그 조회
+    GET_RECENT_EMAIL_LOGS = """
+        SELECT user_email, email_subject, status, sent_at, recommended_jobs_count
+        FROM email_send_logs 
+        ORDER BY sent_at DESC 
+        LIMIT %s
+    """
+
 
 class MatchingQueries:
     # 사용자 정보 + 희망조건 조회

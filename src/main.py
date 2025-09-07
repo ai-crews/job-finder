@@ -41,12 +41,33 @@ def main():
             # 개인화된 이메일 발송
             results = send_personalized_email(email, name, recommended_jobs)
 
-            if email in results and results[email][0] == "SUCCESS":
-                print(f"✓ {email} 발송 성공")
-            else:
-                print(
-                    f"✗ {email} 발송 실패: {results[email][1] if email in results else '알 수 없는 오류'}"
-                )
+            # 발송 결과 로그 기록
+            try:
+                with Database.get_cursor() as (cursor, connection):
+                    status = "SUCCESS" if results[email][0] == "SUCCESS" else "FAILED"
+                    error_msg = results[email][1] if status == "FAILED" else None
+
+                    cursor.execute(
+                        EmailQueries.INSERT_EMAIL_LOG,
+                        (
+                            user_id,
+                            email,
+                            f"{name}님을 위한 맞춤 채용공고",
+                            "PERSONALIZED",
+                            status,
+                            error_msg,
+                            len(recommended_jobs),
+                        ),
+                    )
+                    connection.commit()
+
+                    if status == "SUCCESS":
+                        print(f"✓ {email} 발송 성공 (로그 기록 완료)")
+                    else:
+                        print(f"✗ {email} 발송 실패: {error_msg}")
+
+            except Exception as e:
+                print(f"로그 기록 실패: {e}")
         else:
             print("추천할 공고가 없습니다.")
 
