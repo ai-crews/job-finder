@@ -2,7 +2,7 @@
 import logging
 import json
 from db.db_local import Database
-from db.db_query import MatchingQueries
+from db.db_query.matching_query import MatchingQueries
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +148,7 @@ def get_personalized_jobs(user_email, top_n=10):
                 logger.warning("활성 채용공고가 없습니다")
                 return []
 
-            # 채용공고를 딕셔너리로 변환
+                # 채용공고를 딕셔너리로 변환
             job_dicts = [
                 {
                     "id": job[0],
@@ -160,12 +160,12 @@ def get_personalized_jobs(user_email, top_n=10):
                     "employment_type": job[6],
                     "application_deadline_date": job[7],
                     "created_at": job[8],
-                    "job_role": job[9] if len(job) > 9 else None,
+                    "job_role": job[3],  # position_name을 job_role로 사용
                 }
                 for job in job_postings
             ]
 
-            # 단계별 필터링 (플로우차트 방식)
+            # 단계별 필터링
             logger.info("=== 필터링 시작 ===")
 
             # 1단계: 경력 필터링

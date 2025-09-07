@@ -1,10 +1,11 @@
 # main.py
 import logging
+import os
 from datetime import datetime
-from services.email_sender import send_personalized_email
+from services.email_service import SMTPEmailService
 from services.job_matcher import get_personalized_jobs
 from db.db_local import Database
-from db.db_query import EmailQueries
+from db.db_query.email_query import EmailQueries
 from dotenv import load_dotenv
 
 # 로거 설정
@@ -18,7 +19,31 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
-def process_single_user(user_id, email, name):
+def get_email_service():
+    """이메일 서비스 인스턴스 생성"""
+    smtp_server = os.getenv("SMTP_SERVER")
+    smtp_port = int(os.getenv("SMTP_PORT", 587))
+    email = os.getenv("EMAIL_ADDRESS")
+    password = os.getenv("EMAIL_PASSWORD")
+
+    return SMTPEmailService(smtp_server, smtp_port, email, password)
+
+
+def load_email_template():
+    """이메일 HTML 템플릿 로드"""
+    template_path = "templates/email_template.html"  # 템플릿 파일 경로
+    try:
+        with open(template_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except FileNotFoundError:
+        logger.error(f"템플릿 파일을 찾을 수 없음: {template_path}")
+        return None
+    except Exception as e:
+        logger.error(f"템플릿 로드 오류: {e}")
+        return None
+
+
+def process_single_user(user_id, email, name, email_service, html_template):
     """단일 사용자 처리"""
     logger.info(f"처리 시작: {name}({email})")
 
@@ -35,17 +60,28 @@ def process_single_user(user_id, email, name):
         logger.info(f"추천 공고 {len(recommended_jobs)}개 발견: {email}")
 
         # 개인화된 이메일 발송
-        results = send_personalized_email(email, name, recommended_jobs)
+        subject = f"{name}님을 위한 맞춤 채용공고"
+        result = email_service.send_message(
+            to=email,
+            subject=subject,
+            html_content=html_template,
+            job_data=recommended_jobs,
+            user_name=name,
+        )
 
         # 발송 결과 처리
-        if email in results:
-            status, error_msg = results[email]
+        if result["status"] == "SUCCESS":
             return log_email_result(
-                user_id, email, name, status, error_msg, len(recommended_jobs)
+                user_id, email, name, "SUCCESS", None, len(recommended_jobs)
             )
         else:
             return log_email_result(
-                user_id, email, name, "FAILED", "알 수 없는 오류", len(recommended_jobs)
+                user_id,
+                email,
+                name,
+                "FAILED",
+                result.get("error", "알 수 없는 오류"),
+                len(recommended_jobs),
             )
 
     except Exception as e:
@@ -103,6 +139,18 @@ def main():
     """메인 실행 함수"""
     logger.info("=== 개인화된 채용공고 이메일 발송 시작 ===")
 
+    # 이메일 서비스 초기화
+    email_service = get_email_service()
+    if not email_service:
+        logger.error("이메일 서비스 초기화 실패")
+        return
+
+    # HTML 템플릿 로드
+    html_template = load_email_template()
+    if not html_template:
+        logger.error("HTML 템플릿 로드 실패")
+        return
+
     # 구독자 목록 가져오기
     users = get_active_subscribers()
 
@@ -121,7 +169,7 @@ def main():
         user_id, email, name = user[0], user[1], user[2]
         logger.info(f"[{i}/{total_users}] 처리 중: {email}")
 
-        if process_single_user(user_id, email, name):
+        if process_single_user(user_id, email, name, email_service, html_template):
             success_count += 1
         else:
             fail_count += 1
