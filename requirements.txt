@@ -1,8 +1,1 @@
-google_api_python_client==2.177.0
-google_auth_oauthlib==1.2.2
-gspread==6.2.1
-pandas==2.3.2
-protobuf==6.32.0
 pymysql==1.1.2
-python-dotenv==1.1.1
-Requests==2.32.5
