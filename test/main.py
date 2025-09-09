@@ -26,7 +26,7 @@ def main():
     html_file = "test_email.html"
     results = send_emails(
         email_list=email_list,
-        subject="이메일 발송 테스트",
+        subject="📩 [JOB FINDER] 이번 주 맞춤 채용공고 도착!",
         message_text="안녕하세요!\n\n이것은 테스트 이메일입니다.",
         html_file_path=html_file,
     )
