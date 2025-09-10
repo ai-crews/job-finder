@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from sheets_auth import get_sheets_client
+from .sheets_auth import get_sheets_client
 
 
 def load_recipients_from_sheet(spreadsheet_id, worksheet_name="Sheet1"):
