@@ -23,7 +23,6 @@ def load_recipients_from_sheet(spreadsheet_id, worksheet_name="Sheet1"):
 
     # 첫 번째 행이 헤더
     headers = all_values[0]
-    print(f"헤더: {headers}")
 
     # 헤더에서 '이메일 주소' 컬럼의 인덱스 찾기
     try:

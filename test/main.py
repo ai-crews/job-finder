@@ -1,6 +1,6 @@
 # main.py
-from email_service import send_emails
-from sheets_service import load_recipients_from_sheet, write_status_to_sheet
+from services.email.email_service import send_emails
+from services.sheets.sheets_service import load_recipients_from_sheet, write_status_to_sheet
 from dotenv import load_dotenv
 import os
 
