@@ -4,8 +4,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 import os
-from message_builder import load_html_template
-from stmp_service import SMTPEmailService
+from .message_builder import load_html_template
+from .stmp_service import SMTPEmailService
 
 
 def send_emails(

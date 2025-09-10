@@ -8,440 +8,584 @@
     /* ============= CSS 시작 ============= */
     
     /* ============= 기본 초기화 및 이메일 호환성 ============= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-        "Noto Sans KR", "Malgun Gothic", sans-serif;
-      margin: 0 !important;
-      padding: 0 !important;
-      background: #f4f4f4;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
-    }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", "Malgun Gothic", sans-serif;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #f4f4f4;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
 
-    table {
-      border-collapse: collapse;
-    }
+table {
+  border-collapse: collapse;
+}
 
-    /* ============= 컨테이너 ============= */
-    .email-wrapper {
-      width: 100% !important;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
+/* ============= 컨테이너 ============= */
+.email-wrapper {
+  width: 100% !important;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
 
-    .email-container {
-      width: 100% !important;
-      max-width: 600px !important;
-      margin: 0 auto !important;
-      background: #ffffff;
-    }
+.email-container {
+  width: 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+  background: #ffffff;
+}
 
-    /* ============= 헤더 ============= */
-    .header {
-      background-color: #006c14 !important;
-      padding: 25px 20px !important;
-      text-align: left;
-    }
+/* ============= 헤더 ============= */
+.header {
+  background-color: #006c14 !important;
+  padding: 25px 20px !important;
+  text-align: left;
+}
 
-    .header-title {
-      color: #ffc93e !important;
-      font-size: 22px !important;
-      font-weight: bold !important;
-      line-height: 1.3 !important;
-      margin: 0 0 10px 0 !important;
-    }
+.header-title {
+  color: #ffc93e !important;
+  font-size: 22px !important;
+  font-weight: bold !important;
+  line-height: 1.3 !important;
+  margin: 0 0 10px 0 !important;
+}
 
-    .header-subtitle {
-      color: #ffffff !important;
-      font-size: 15px !important;
-      line-height: 1.4 !important;
-      margin: 0 0 10px 0 !important;
-    }
+.header-subtitle {
+  color: #ffffff !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+  margin: 0 0 10px 0 !important;
+}
 
-    .header-bottom-table {
-      width: 100% !important;
-      border-collapse: collapse !important;
-    }
+.header-bottom-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
 
-    .header-notice-cell {
-      text-align: left !important;
-      vertical-align: middle !important;
-    }
+.header-notice-cell {
+  text-align: left !important;
+  vertical-align: middle !important;
+}
 
-    .header-date-cell {
-      text-align: right !important;
-      vertical-align: middle !important;
-      white-space: nowrap !important;
-    }
+.header-date-cell {
+  text-align: right !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
 
-    .header-notice {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-    }
+.header-notice {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
 
-    .header-notice .emoji {
-      font-size: 11px;
-      line-height: 1;
-      vertical-align: middle;
-    }
+.header-notice .emoji {
+  font-size: 11px;
+  line-height: 1;
+  vertical-align: middle;
+}
 
-    .header-date {
-      color: rgba(255, 255, 255, 0.8) !important;
-      font-size: 13px !important;
-      text-align: right;
-    }
+.header-date {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 13px !important;
+  text-align: right;
+}
 
-    /* ============= 메인 콘텐츠 ============= */
-    .main-content {
-      padding: 20px !important;
-    }
+/* ============= 메인 콘텐츠 ============= */
+.main-content {
+  padding: 20px !important;
+}
 
-    .section-title {
-      color: #6d6d6d !important;
-      font-size: 17px !important;
-      line-height: 1.4 !important;
-      margin: 0 0 20px 0 !important;
-    }
+.section-title {
+  color: #6d6d6d !important;
+  font-size: 17px !important;
+  line-height: 1.4 !important;
+  margin: 0 0 20px 0 !important;
+}
 
-    /* ============= 채용공고 카드 ============= */
-    .job-card {
-      border: 1px solid #eeeeee !important;
-      border-radius: 8px !important;
-      background-color: #fafafa !important;
-      margin-bottom: 15px !important;
-      overflow: hidden;
-    }
+/* ============= 채용공고 카드 ============= */
+.job-card {
+  border: 1px solid #eeeeee !important;
+  border-radius: 8px !important;
+  background-color: #fafafa !important;
+  margin-bottom: 15px !important;
+  overflow: hidden;
+}
 
-    .job-content {
-      padding: 15px !important;
-    }
+.job-content {
+  padding: 15px !important;
+}
 
-    .job-header-table {
-      width: 100% !important;
-      border-collapse: collapse !important;
-    }
+.job-header-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
 
-    .logo-cell {
-      width: 70px !important;
-      padding: 0 15px 0 0 !important;
-      vertical-align: top !important;
-    }
+.logo-cell {
+  width: 70px !important;
+  padding: 0 15px 0 0 !important;
+  vertical-align: top !important;
+}
 
-    .company-logo {
-      width: 70px;
-      height: 115px;
-      background: #ffffff;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #666;
-      border: 1px solid #eee;
-      font-weight: bold;
-    }
+.company-logo {
+  width: 70px;
+  height: 115px;
+  background: #ffffff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #666;
+  border: 1px solid #eee;
+  font-weight: bold;
+}
 
-    .company-logo img {
-      border: 0;
-      max-width: 100% !important;
-      max-height: 100% !important;
-      width: auto !important;
-      height: auto !important;
-      line-height: 100%;
-      outline: none;
-      text-decoration: none;
-      -ms-interpolation-mode: bicubic;
-      object-fit: contain;
-    }
+.company-logo img {
+  border: 0;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 100%;
+  outline: none;
+  text-decoration: none;
+  -ms-interpolation-mode: bicubic;
+  object-fit: contain;
+}
 
-    .info-cell {
-      vertical-align: top !important;
-      padding: 0 !important;
-    }
+.info-cell {
+  vertical-align: top !important;
+  padding: 0 !important;
+}
 
-    .company-name {
-      font-weight: bold !important;
-      font-size: 16px !important;
-      color: #000000 !important;
-      margin-bottom: 4px !important;
-    }
+.company-name {
+  font-weight: bold !important;
+  font-size: 16px !important;
+  color: #000000 !important;
+  margin-bottom: 4px !important;
+}
 
-    .star {
-      color: #ffd700 !important;
-      margin-right: 5px !important;
-    }
+.star {
+  color: #ffd700 !important;
+  margin-right: 5px !important;
+}
 
-    .job-info-table {
-      width: 100% !important;
-      border-collapse: collapse !important;
-      margin-top: 0 !important;
-    }
+.job-info-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 0 !important;
+}
 
-    .job-info-table td {
-      padding: 3px 0 !important;
-      vertical-align: center !important;
-      border: none !important;
-    }
+.job-info-table td {
+  padding: 3px 0 !important;
+  vertical-align: center !important;
+  border: none !important;
+}
 
-    .job-label-cell {
-      width: 80px !important;
-      padding-right: 12px !important;
-    }
+.job-label-cell {
+  width: 80px !important;
+  padding-right: 12px !important;
+}
 
-    .job-label {
-      color: #444444 !important;
-      font-size: 14px !important;
-      font-weight: bold !important;
-      white-space: nowrap !important;
-    }
+.job-label {
+  color: #444444 !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  white-space: nowrap !important;
+}
 
-    .job-value {
-      color: #000000 !important;
-      font-size: 14px !important;
-      line-height: 1.4 !important;
-    }
+.job-value {
+  color: #000000 !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
 
-    .deadline-container {
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-    }
+.deadline-container {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
 
-    .job-dday {
-      font-weight: bold !important;
-      font-size: 14px !important;
-    }
+.job-dday {
+  font-weight: bold !important;
+  font-size: 14px !important;
+}
 
-    /* ============= 태그 ============= */
-    .tags {
-      display: inline !important;
-    }
+/* ============= 태그 ============= */
+.tags {
+  display: inline !important;
+}
 
-    .tag {
-      display: inline-block !important;
-      padding: 3px 10px !important;
-      border-radius: 4px !important;
-      font-size: 13px !important;
-      font-weight: 500 !important;
-      margin-right: 5px !important;
-      margin-bottom: 2px !important;
-    }
+.tag {
+  display: inline-block !important;
+  padding: 3px 10px !important;
+  border-radius: 4px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  margin-right: 5px !important;
+  margin-bottom: 2px !important;
+}
 
-    .tag-entry {
-      background-color: #bdf4ff !important;
-      color: #000000 !important;
-    }
+.tag-entry {
+  background-color: #bdf4ff !important;
+  color: #000000 !important;
+}
 
-    .tag-fulltime {
-      background-color: #eaffce !important;
-      color: #07632b !important;
-    }
+.tag-fulltime {
+  background-color: #eaffce !important;
+  color: #07632b !important;
+}
 
-    .tag-intern {
-      background-color: #fff0ae !important;
-      color: #5e2e00 !important;
-    }
+.tag-intern {
+  background-color: #fff0ae !important;
+  color: #5e2e00 !important;
+}
 
-    .tag-conversion {
-      background-color: #e6d7ff !important;
-      color: #4a148c !important;
-    }
+.tag-conversion {
+  background-color: #e6d7ff !important;
+  color: #4a148c !important;
+}
 
-    /* ============= 버튼 ============= */
-    .apply-btn {
-      display: block !important;
-      width: 100% !important;
-      background-color: #f9fafc !important;
-      border: 1px solid #e3e8ef !important;
-      border-radius: 6px !important;
-      padding: 12px !important;
-      text-align: center !important;
-      text-decoration: none !important;
-      color: #2e2e2e !important;
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      margin-top: 15px !important;
-    }
+/* ============= 버튼 ============= */
+.apply-btn {
+  display: block !important;
+  width: 100% !important;
+  background-color: #f9fafc !important;
+  border: 1px solid #e3e8ef !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  color: #2e2e2e !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  margin-top: 15px !important;
+}
 
-    /* ============= 피드백 섹션 ============= */
-    .feedback-section {
-      background-color: #f9fafc !important;
-      border: 1px solid #e3e8ef !important;
-      border-radius: 8px !important;
-      padding: 20px !important;
-      margin: 25px 0 !important;
-      text-align: center !important;
-    }
+/* ============= 피드백 섹션 개선 ============= */
+.feedback-section {
+  background: #f2fff6;
+  border: 1px solid #6ddeaf !important;
+  border-radius: 16px !important;
+  padding: 30px 25px !important;
+  margin: 35px 0 !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
 
-    .feedback-request {
-      text-align: center !important;
-    }
+.feedback-content {
+  position: relative !important;
+  z-index: 1 !important;
+}
 
-    .feedback-header {
-      background-color: #1ba534 !important;
-      color: #ffffff !important;
-      padding: 6px 14px !important;
-      border-radius: 4px !important;
-      display: inline-block !important;
-      margin-bottom: 12px !important;
-      font-weight: bold !important;
-      font-size: 14px !important;
-    }
+.feedback-emoji {
+  font-size: 36px !important;
+  display: block !important;
+  margin-bottom: 15px !important;
+  animation: bounce 2s infinite ease-in-out;
+}
 
-    .testimonial {
-      color: #333333 !important;
-      line-height: 1.5 !important;
-      margin: 12px 0 !important;
-      font-size: 14px !important;
-      font-style: italic;
-    }
+.feedback-title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  margin-bottom: 15px !important;
+  text-align: center !important;
+}
 
-    .feedback {
-      background-color: #2e2e2e !important;
-      color: #eaffce !important;
-      padding: 10px 20px !important;
-      border-radius: 4px !important;
-      text-decoration: none !important;
-      display: inline-block !important;
-      margin: 12px 0 !important;
-      font-weight: bold !important;
-      font-size: 14px !important;
-    }
+.testimonial {
+  line-height: 1.6 !important;
+  margin: 15px 0 25px 0 !important;
+  font-size: 15px !important;
+  font-style: normal !important;
+}
 
-    .feedback-description {
-      margin-top: 15px;
-      font-size: 13px;
-      line-height: 1.4;
-      color: #666;
-    }
+.feedback-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 14px 28px !important;
+  background-color: #2e2e2e !important;
+  color: #eaffce !important;
+  border-radius: 30px !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  margin-top: 10px !important;
+  border: none !important;
+}
 
-    .footer-links {
-      text-align: center !important;
-      margin: 15px 0 0 0 !important;
-    }
+.feedback-btn-icon {
+  margin-right: 8px !important;
+  font-size: 16px !important;
+}
 
-    .footer-link {
-      color: #666666 !important;
-      text-decoration: underline !important;
-      margin: 8px 0 !important;
-      display: block !important;
-      font-size: 13px !important;
-    }
+/* ============= 푸터 대폭 개선 ============= */
+.footer {
+  background: #006c14 !important;
+  padding: 30px 25px !important;
+  text-align: center !important;
+  position: relative !important;
+}
 
-    /* ============= 푸터 ============= */
-    .footer {
-      background-color: #e8e8e8 !important;
-      padding: 20px !important;
-      text-align: center !important;
-    }
 
-    .footer-brand {
-      background-color: #006c14 !important;
-      color: #ffffff !important;
-      padding: 8px !important;
-      font-size: 20px !important;
-      font-weight: bold !important;
-      margin-bottom: 8px !important;
-      display: inline-block !important;
-      border-radius: 4px !important;
-    }
 
-    .footer-text {
-      color: #666666 !important;
-      font-size: 12px !important;
-      margin: 12px 0 !important;
-      line-height: 1.4 !important;
-    }
+.footer-brand-container {
+  margin-bottom: 5px !important;
+}
 
-    .footer-text a {
-      color: #666666 !important;
-      text-decoration: underline !important;
-    }
+.footer-brand {
+  color: #ffffff !important;
+  padding: 12px 24px !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  margin-bottom: 10px !important;
+  display: inline-block !important;
+  border-radius: 25px !important;
+  letter-spacing: 1.2px !important;
+  border: 2px solid #ffffff !important;
+}
 
-    /* ============= 모바일 최적화 ============= */
-    @media screen and (max-width: 600px) {
-      .email-container {
-        width: 100% !important;
-      }
-      
-      .header {
-        padding: 20px 15px !important;
-      }
-      
-      .main-content {
-        padding: 15px !important;
-      }
-      
-      .header-title {
-        font-size: 20px !important;
-      }
-      
-      .header-subtitle {
-        font-size: 15px !important;
-      }
-      
-      .section-title {
-        font-size: 16px !important;
-      }
-      
-      .company-name {
-        font-size: 15px !important;
-      }
-      
-      .job-label {
-        font-size: 13px !important;
-      }
-      
-      .job-label-cell {
-        width: 75px !important;
-      }
-      
-      .job-value {
-        font-size: 13px !important;
-      }
-      
-      .tag {
-        font-size: 12px !important;
-        padding: 3px 9px !important;
-      }
-      
-      .apply-btn {
-        font-size: 13px !important;
-        padding: 12px !important;
-      }
-      
-      .deadline-container {
-        display: block !important;
-        gap: 0 !important;
-      }
-      
-      .job-dday {
-        display: block !important;
-        margin-top: 2px !important;
-      }
-      
-      .header-bottom-table {
-        display: block !important;
-      }
-      
-      .header-notice-cell,
-      .header-date-cell {
-        display: block !important;
-        text-align: left !important;
-      }
-      
-      .header-date {
-        margin-top: 8px !important;
-        text-align: left !important;
-      }
-    }
+.footer-tagline {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 13px !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+}
+
+.footer-nav {
+  margin-bottom: 25px !important;
+}
+
+.footer-nav-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.footer-nav-cell {
+  padding: 15px 18px !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+  vertical-align: middle !important;
+}
+
+.footer-nav-cell:last-child {
+  border-right: none !important;
+}
+
+.footer-link {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.footer-link:hover {
+  color: #ffc93e !important;
+  text-decoration: none !important;
+  transform: translateY(-1px) !important;
+}
+
+.footer-link-icon {
+  margin-right: 6px !important;
+  font-size: 14px !important;
+}
+
+.footer-divider {
+  width: 80px !important;
+  height: 2px !important;
+  background: #ffc93e !important;
+  margin: 20px auto !important;
+  border: none !important;
+  border-radius: 2px !important;
+  opacity: 0.8 !important;
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin: 10px 0 !important;
+  font-weight: 400 !important;
+}
+
+.footer-text a {
+  color: #ffc93e !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+}
+
+
+.footer-text a.gray {
+  color: #b5b5b5 !important;
+}
+  
+
+.footer-text a:hover {
+  color: #ffffff !important;
+  text-decoration: underline !important;
+}
+
+.footer-copyright {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 11px !important;
+  margin-top: 20px !important;
+  padding-top: 20px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-weight: 300 !important;
+}
+
+/* ============= 모바일 최적화 ============= */
+@media screen and (max-width: 600px) {
+  .email-container {
+    width: 100% !important;
+  }
+  
+  .header {
+    padding: 20px 15px !important;
+  }
+  
+  .main-content {
+    padding: 15px !important;
+  }
+  
+  .header-title {
+    font-size: 20px !important;
+  }
+  
+  .header-subtitle {
+    font-size: 15px !important;
+  }
+  
+  .section-title {
+    font-size: 16px !important;
+  }
+  
+  .company-name {
+    font-size: 15px !important;
+  }
+  
+  .job-label {
+    font-size: 13px !important;
+  }
+  
+  .job-label-cell {
+    width: 75px !important;
+  }
+  
+  .job-value {
+    font-size: 13px !important;
+  }
+  
+  .tag {
+    font-size: 12px !important;
+    padding: 3px 9px !important;
+  }
+  
+  .apply-btn {
+    font-size: 13px !important;
+    padding: 12px !important;
+  }
+  
+  .deadline-container {
+    display: block !important;
+    gap: 0 !important;
+  }
+  
+  .job-dday {
+    display: block !important;
+    margin-top: 2px !important;
+  }
+  
+  .header-bottom-table {
+    display: block !important;
+  }
+  
+  .header-notice-cell,
+  .header-date-cell {
+    display: block !important;
+    text-align: left !important;
+  }
+  
+  .header-date {
+    margin-top: 8px !important;
+    text-align: left !important;
+  }
+
+  /* 모바일 피드백 섹션 */
+  .feedback-section {
+    margin: 20px 0 !important;
+    padding: 25px 20px !important;
+  }
+
+  .feedback-emoji {
+    font-size: 32px !important;
+  }
+
+  .feedback-title {
+    font-size: 18px !important;
+  }
+
+  .testimonial {
+    font-size: 14px !important;
+  }
+
+  .feedback-btn {
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+  }
+
+  /* 모바일 푸터 */
+  .footer {
+    padding: 25px 20px !important;
+  }
+
+  .footer-brand {
+    font-size: 18px !important;
+    padding: 10px 20px !important;
+  }
+
+  .footer-tagline {
+    font-size: 12px !important;
+  }
+
+  .footer-nav-table {
+    display: block !important;
+    background: none !important;
+  }
+
+  .footer-nav-cell {
+    display: block !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 12px 0 !important;
+    background: none !important;
+  }
+
+  .footer-nav-cell:last-child {
+    border-bottom: none !important;
+  }
+
+  .footer-link {
+    font-size: 13px !important;
+  }
+}
 
     
     
@@ -682,7 +826,7 @@
                         <tr>
                           <td class="job-label-cell"><span
                               class="job-label">모집부문</span></td>
-                          <td><span class="job-value">AI, 컨설팅</span></td>
+                          <td><span class="job-value">AI, Consulting</span></td>
                         </tr>
                         <tr>
                           <td class="job-label-cell"><span
@@ -750,7 +894,7 @@
                   </tr>
                 </table>
                 <a
-                  href="https://www.nexon-tutorial.com/recruit"
+                  href="https://careers.nexon.com/recruit/8702?_gl=1*1a5jdkm*_ga*NDkxNDc5ODg5LjE3NTc1MTU0MTQ.*_ga_CFD7BMN3PP*czE3NTc1MTU0MTMkbzEkZzEkdDE3NTc1MTU0NDMkajMwJGwwJGgw"
                   class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
               </div>
             </div>
@@ -1072,46 +1216,48 @@
 
             <!-- 피드백 섹션 -->
             <div class="feedback-section">
-              <div class="feedback-header">Hoper의 한마디!</div>
-              <div class="testimonial">
-                "한 눈에 볼 수 있는 서비스였어요!" <br />
-                서비스 이용하면서 한 눈에 저에게 맞는 공고를 확인할 수 있어서<br />
-                빠르게 지원할 수 있었어요! 저처럼 귀찮은 분들한테 딱이에요!<br />
-                -김호프님-
+              <div class="feedback-content">
+                <span class="feedback-emoji">🤔</span>
+                <div class="feedback-title">받아본 채용공고 어떠셨나요?</div>
+                <div class="testimonial">
+                    여러분의 소중한 의견을 들려주세요!<br/>
+                    Hoper 분들의 피드백을 반영하여 더 나은 서비스로 찾아뵙겠습니다.
+                </div>
+                <a href="https://forms.gle/UuUfENJ4oKtVprQH8" 
+                  class="feedback-btn" target="_blank" rel="noopener noreferrer">
+                  <span class="feedback-btn-icon">💌</span>
+                  피드백 하러가기
+                </a>
               </div>
             </div>
 
-            <div class="feedback-request">
-              <a href="#" class="feedback">받아 본 채용공고가 어떠셨나요?</a>
 
-              <div class="feedback-description">
-                여러분의 이용 후기를 들려주세요! Hoper 분들의 의견을 반영하여<br />
-                서비스 업데이트에 노력을 기울이겠습니다.
-              </div>
-
-              <div class="footer-links">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLScfHL-JZD5Fq23sNVXDgLzjzjbyaEsMujfwvcoplMc7gXPhYw/viewform?usp=header"
-                  class="footer-link">서비스 피드백하러 가기</a>
-                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74"
-                  class="footer-link">JOB FINDER 공식 페이지</a>
-              </div>
-            </div>
           </div>
 
           <!-- 푸터 -->
           <div class="footer">
-            <div class="footer-brand">JOB FINDER</div>
-            <div class="footer-text">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeTUWAp7S3q36VwlXCSfkC5_r55caNbAm0Rsgnqd9wNp6dePw/viewform?usp=header">구독정보
-                변경하기</a> | <a
-                href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">FAQ</a><br />
+            <div class="footer-brand-container">
+              <div class="footer-brand">JOB FINDER</div>
+              <div class="footer-tagline">당신의 성공적인 커리어를 응원합니다 🎯</div>
             </div>
+            
             <div class="footer-text">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLScWF5THutH-cfobPL2Nf_jTuedLthyJ_foYGjG65VzSmC3Gsw/viewform?usp=header">수신거부😭
-                </a>
+                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">공식 페이지</a> | 
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTUWAp7S3q36VwlXCSfkC5_r55caNbAm0Rsgnqd9wNp6dePw/viewform?usp=header">구독정보 변경</a> | 
+                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">FAQ</a>
+            </div>
+
+        
+            
+<div class="footer-text">
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScWF5THutH-cfobPL2Nf_jTuedLthyJ_foYGjG65VzSmC3Gsw/viewform?usp=header" 
+     class="footer-link gray" target="_blank" rel="noopener noreferrer">
+    수신거부 😭
+  </a>
+</div>
+            
+            <div class="footer-copyright">
+              © 2025 JOB FINDER. All rights reserved.
             </div>
           </div>
         </div>
