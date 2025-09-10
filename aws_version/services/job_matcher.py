@@ -1,7 +1,7 @@
 # services/job_matcher.py
 import logging
 import json
-from db.db_local import Database
+from db.db_aws import Database
 from db.db_query import MatchingQueries
 
 logger = logging.getLogger(__name__)

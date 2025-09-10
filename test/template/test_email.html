@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JOB FINDER 채용공고</title>
+    <style>
+    /* ============= CSS 시작 ============= */
+    
+    /* ============= 기본 초기화 및 이메일 호환성 ============= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+        "Noto Sans KR", "Malgun Gothic", sans-serif;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: #f4f4f4;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    /* ============= 컨테이너 ============= */
+    .email-wrapper {
+      width: 100% !important;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .email-container {
+      width: 100% !important;
+      max-width: 600px !important;
+      margin: 0 auto !important;
+      background: #ffffff;
+    }
+
+    /* ============= 헤더 ============= */
+    .header {
+      background-color: #006c14 !important;
+      padding: 25px 20px !important;
+      text-align: left;
+    }
+
+    .header-title {
+      color: #ffc93e !important;
+      font-size: 22px !important;
+      font-weight: bold !important;
+      line-height: 1.3 !important;
+      margin: 0 0 10px 0 !important;
+    }
+
+    .header-subtitle {
+      color: #ffffff !important;
+      font-size: 15px !important;
+      line-height: 1.4 !important;
+      margin: 0 0 10px 0 !important;
+    }
+
+    .header-bottom-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+
+    .header-notice-cell {
+      text-align: left !important;
+      vertical-align: middle !important;
+    }
+
+    .header-date-cell {
+      text-align: right !important;
+      vertical-align: middle !important;
+      white-space: nowrap !important;
+    }
+
+    .header-notice {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .header-notice .emoji {
+      font-size: 11px;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    .header-date {
+      color: rgba(255, 255, 255, 0.8) !important;
+      font-size: 13px !important;
+      text-align: right;
+    }
+
+    /* ============= 메인 콘텐츠 ============= */
+    .main-content {
+      padding: 20px !important;
+    }
+
+    .section-title {
+      color: #6d6d6d !important;
+      font-size: 17px !important;
+      line-height: 1.4 !important;
+      margin: 0 0 20px 0 !important;
+    }
+
+    /* ============= 채용공고 카드 ============= */
+    .job-card {
+      border: 1px solid #eeeeee !important;
+      border-radius: 8px !important;
+      background-color: #fafafa !important;
+      margin-bottom: 15px !important;
+      overflow: hidden;
+    }
+
+    .job-content {
+      padding: 15px !important;
+    }
+
+    .job-header-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+    }
+
+    .logo-cell {
+      width: 70px !important;
+      padding: 0 15px 0 0 !important;
+      vertical-align: top !important;
+    }
+
+    .company-logo {
+      width: 70px;
+      height: 115px;
+      background: #ffffff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #666;
+      border: 1px solid #eee;
+      font-weight: bold;
+    }
+
+    .company-logo img {
+      border: 0;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      width: auto !important;
+      height: auto !important;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+      object-fit: contain;
+    }
+
+    .info-cell {
+      vertical-align: top !important;
+      padding: 0 !important;
+    }
+
+    .company-name {
+      font-weight: bold !important;
+      font-size: 16px !important;
+      color: #000000 !important;
+      margin-bottom: 4px !important;
+    }
+
+    .star {
+      color: #ffd700 !important;
+      margin-right: 5px !important;
+    }
+
+    .job-info-table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      margin-top: 0 !important;
+    }
+
+    .job-info-table td {
+      padding: 3px 0 !important;
+      vertical-align: center !important;
+      border: none !important;
+    }
+
+    .job-label-cell {
+      width: 80px !important;
+      padding-right: 12px !important;
+    }
+
+    .job-label {
+      color: #444444 !important;
+      font-size: 14px !important;
+      font-weight: bold !important;
+      white-space: nowrap !important;
+    }
+
+    .job-value {
+      color: #000000 !important;
+      font-size: 14px !important;
+      line-height: 1.4 !important;
+    }
+
+    .deadline-container {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+
+    .job-dday {
+      font-weight: bold !important;
+      font-size: 14px !important;
+    }
+
+    /* ============= 태그 ============= */
+    .tags {
+      display: inline !important;
+    }
+
+    .tag {
+      display: inline-block !important;
+      padding: 3px 10px !important;
+      border-radius: 4px !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      margin-right: 5px !important;
+      margin-bottom: 2px !important;
+    }
+
+    .tag-entry {
+      background-color: #bdf4ff !important;
+      color: #000000 !important;
+    }
+
+    .tag-fulltime {
+      background-color: #eaffce !important;
+      color: #07632b !important;
+    }
+
+    .tag-intern {
+      background-color: #fff0ae !important;
+      color: #5e2e00 !important;
+    }
+
+    .tag-conversion {
+      background-color: #e6d7ff !important;
+      color: #4a148c !important;
+    }
+
+    /* ============= 버튼 ============= */
+    .apply-btn {
+      display: block !important;
+      width: 100% !important;
+      background-color: #f9fafc !important;
+      border: 1px solid #e3e8ef !important;
+      border-radius: 6px !important;
+      padding: 12px !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      color: #2e2e2e !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      margin-top: 15px !important;
+    }
+
+    /* ============= 피드백 섹션 ============= */
+    .feedback-section {
+      background-color: #f9fafc !important;
+      border: 1px solid #e3e8ef !important;
+      border-radius: 8px !important;
+      padding: 20px !important;
+      margin: 25px 0 !important;
+      text-align: center !important;
+    }
+
+    .feedback-request {
+      text-align: center !important;
+    }
+
+    .feedback-header {
+      background-color: #1ba534 !important;
+      color: #ffffff !important;
+      padding: 6px 14px !important;
+      border-radius: 4px !important;
+      display: inline-block !important;
+      margin-bottom: 12px !important;
+      font-weight: bold !important;
+      font-size: 14px !important;
+    }
+
+    .testimonial {
+      color: #333333 !important;
+      line-height: 1.5 !important;
+      margin: 12px 0 !important;
+      font-size: 14px !important;
+      font-style: italic;
+    }
+
+    .feedback {
+      background-color: #2e2e2e !important;
+      color: #eaffce !important;
+      padding: 10px 20px !important;
+      border-radius: 4px !important;
+      text-decoration: none !important;
+      display: inline-block !important;
+      margin: 12px 0 !important;
+      font-weight: bold !important;
+      font-size: 14px !important;
+    }
+
+    .feedback-description {
+      margin-top: 15px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #666;
+    }
+
+    .footer-links {
+      text-align: center !important;
+      margin: 15px 0 0 0 !important;
+    }
+
+    .footer-link {
+      color: #666666 !important;
+      text-decoration: underline !important;
+      margin: 8px 0 !important;
+      display: block !important;
+      font-size: 13px !important;
+    }
+
+    /* ============= 푸터 ============= */
+    .footer {
+      background-color: #e8e8e8 !important;
+      padding: 20px !important;
+      text-align: center !important;
+    }
+
+    .footer-brand {
+      background-color: #006c14 !important;
+      color: #ffffff !important;
+      padding: 8px !important;
+      font-size: 20px !important;
+      font-weight: bold !important;
+      margin-bottom: 8px !important;
+      display: inline-block !important;
+      border-radius: 4px !important;
+    }
+
+    .footer-text {
+      color: #666666 !important;
+      font-size: 12px !important;
+      margin: 12px 0 !important;
+      line-height: 1.4 !important;
+    }
+
+    .footer-text a {
+      color: #666666 !important;
+      text-decoration: underline !important;
+    }
+
+    /* ============= 모바일 최적화 ============= */
+    @media screen and (max-width: 600px) {
+      .email-container {
+        width: 100% !important;
+      }
+      
+      .header {
+        padding: 20px 15px !important;
+      }
+      
+      .main-content {
+        padding: 15px !important;
+      }
+      
+      .header-title {
+        font-size: 20px !important;
+      }
+      
+      .header-subtitle {
+        font-size: 15px !important;
+      }
+      
+      .section-title {
+        font-size: 16px !important;
+      }
+      
+      .company-name {
+        font-size: 15px !important;
+      }
+      
+      .job-label {
+        font-size: 13px !important;
+      }
+      
+      .job-label-cell {
+        width: 75px !important;
+      }
+      
+      .job-value {
+        font-size: 13px !important;
+      }
+      
+      .tag {
+        font-size: 12px !important;
+        padding: 3px 9px !important;
+      }
+      
+      .apply-btn {
+        font-size: 13px !important;
+        padding: 12px !important;
+      }
+      
+      .deadline-container {
+        display: block !important;
+        gap: 0 !important;
+      }
+      
+      .job-dday {
+        display: block !important;
+        margin-top: 2px !important;
+      }
+      
+      .header-bottom-table {
+        display: block !important;
+      }
+      
+      .header-notice-cell,
+      .header-date-cell {
+        display: block !important;
+        text-align: left !important;
+      }
+      
+      .header-date {
+        margin-top: 8px !important;
+        text-align: left !important;
+      }
+    }
+
+    
+    
+    /* ============= CSS 끝 ============= */
+  </style>
+  </head>
+  <body>
+    <!-- ============= HTML 시작 ============= -->
+
+    <div class="email-wrapper">
+      <div class="email-container">
+        <!-- 헤더 -->
+        <div class="header">
+        <div class="header-title"></span>🎯 9월 2주차 채용공고 도착!</div>
+          <div class="header-subtitle">
+            '바로가기'를 누르면 자세한 정보를 볼 수 있어요!
+          </div>
+        <table class="header-bottom-table">
+          <tr>
+          <td class="header-notice-cell">
+            <div class="header-notice">
+              <span class="emoji">⚠️</span> 정확한 정보는 각 회사 홈페이지를 통해 확인해 주세요
+            </div>
+          </td>
+            <td class="header-date-cell">
+              <div class="header-date">2025.09.11</div>
+            </td>
+          </tr>
+        </table>
+        </div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+          <div class="section-title">
+            테스터님에게 가장 적합한 채용공고<br />
+            <small>(⭐️이 표시된 공고는 사용자님의 수신희망기업이에요!)</small>
+          </div>
+
+          <!-- 한국평가데이터 -->
+          <div class="job-card">
+            <div class="job-content">
+              <table class="job-header-table">
+                <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://daoift3qrrnil.cloudfront.net/company_groups/images/000/003/374/original/220210_KODATA_%EA%B5%AD%EB%AC%B8%EC%A1%B0%ED%95%A9.png?1684486232"
+                        alt="한국평가데이터" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">한국평가데이터</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">AI 개발, 기업 신용 위험관리
+                              컨설팅</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td>
+                            <div class="job-value deadline-container">
+                                <span>~25.09.14 23:00</span>
+                                <span class="job-dday">(D-3)</span>
+                            </div></td>
+                            
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a href="https://kodata.applyin.co.kr/jobs/19590"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- KCB -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.bigdata-transportation.kr/cmm/fms/getImage.do?atchFileId=SLLRDOC_000000000003"
+                        alt="KCB" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">KCB</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">CB마케팅 및 분석지원 등</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.14 23:59</span>
+                                <span class="job-dday">(D-3)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://kcb.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=226621"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- IBK기업은행 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://wiki1.kr/images/thumb/d/dd/%EA%B8%B0%EC%97%85%EC%9D%80%ED%96%89_%EB%A1%9C%EA%B3%A0.png/200px-%EA%B8%B0%EC%97%85%EC%9D%80%ED%96%89_%EB%A1%9C%EA%B3%A0.png"
+                        alt="IBK기업은행" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">IBK기업은행</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">디지털</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.15 10:00</span>
+                                <span class="job-dday">(D-4)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://ibk.incruit.com/hire/viewhire.asp?projectid=124"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 하나은행 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png"
+                        alt="하나은행" class="company-logo-img" />
+
+                      </td>
+                    <td class="info-cell">
+                      <div class="company-name">하나은행</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">디지털/AI</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                            <td>
+                            <div class="job-value deadline-container">
+                                <span>2025.09.17 18:00</span>
+                                <span class="job-dday">(D-6)</span>
+                            </div>
+                            </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://hanabank.incruit.com/hire/viewhire.asp?projectid=114"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- LG CNS -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lg.co.kr/images/common/default_og_image_new.jpg"
+                        alt="LG CNS" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">LG CNS</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">AI, 컨설팅</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>2025.09.18 18:00</span>
+                                <span class="job-dday">(D-7)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a href="https://careers.lg.com/apply/detail?id=1000781"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 넥슨 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.civicnews.com/news/photo/201902/20314_27906_854.png"
+                        alt="넥슨게임즈" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">넥슨게임즈</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">[콘텐츠분석센터] FunQA</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-intern">인턴</span>
+                              <span class="tag tag-conversion">전환형</span>
+
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.15 17:00</span>
+                                <span class="job-dday">(D-4)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://www.nexon-tutorial.com/recruit"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 롯데이노베이트 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
+                        alt="롯데이노베이트" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">롯데이노베이트</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">NLP AI (AI기술팀)</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.15 23:00</span>
+                                <span class="job-dday">(D-4)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659544"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 롯데하이마트 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
+                        alt="롯데하이마트" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">롯데하이마트</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">Data, AI</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-intern">인턴</span>
+                              <span class="tag tag-conversion">전환형</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.15 23:00</span>
+                                <span class="job-dday">(D-4)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21667415?compcd=?id=bookmark1001"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 롯데케미칼 AI -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
+                        alt="롯데케미칼" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">롯데케미칼</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">AI</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.16 23:00</span>
+                                <span class="job-dday">(D-5)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659315?compcd=?id=bookmark1002"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+            
+            <!-- 롯데케미칼 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
+                        alt="롯데케미칼" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">롯데케미칼</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">DT</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.16 23:00</span>
+                                <span class="job-dday">(D-5)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659400?compcd=?id=bookmark1003"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 롯데호텔 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
+                        alt="롯데호텔" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">롯데호텔</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">DX</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-intern">인턴</span>
+                              <span class="tag tag-conversion">전환형</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.17 23:00</span>
+                                <span class="job-dday">(D-6)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21660555?compcd=?id=bookmark1004"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 라이나생명 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://www.lina.co.kr/_nuxt/img/Chubb_LinaLifeLogo_2.21259e6306bc7f8fe5adc7c5d3a1af76.png"
+                        alt="라이나생명" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">라이나생명</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">AI 엔지니어, 데이터</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.19 19:00</span>
+                                <span class="job-dday">(D-8)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a href="https://linakorea.careerlink.kr/jobs/RC20250830020258"
+                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 카카오 -->
+            <div class="job-card">
+              <div class="job-content">
+                <table class="job-header-table">
+                  <tr>
+                  <td class="logo-cell">
+                    <div class="company-logo">
+                      <img
+                        src="https://mblogthumb-phinf.pstatic.net/MjAyMTEwMjlfMjM2/MDAxNjM1NDg2OTM3MDc2.-ThCEMQKLgncudeEeP9icT07wpITM2kkfQ-wpRy6jwcg.PLLaGRGtJ8fkqo2TpPv7rCoj04bKohgpSsNQNDqW11og.PNG.merrily1204/%EC%B9%B4%EC%B9%B4%EC%98%A4_%EB%85%B8%EB%9E%80%EC%83%89.png?type=w800"
+                        alt="카카오" class="company-logo-img" />
+                    </td>
+                    <td class="info-cell">
+                      <div class="company-name">카카오</div>
+                      <table class="job-info-table">
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">모집부문</span></td>
+                          <td><span class="job-value">[2026 신입공채] Tech - Tech
+                              공통</span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">고용형태</span></td>
+                          <td><span class="tags">
+                              <span class="tag tag-entry">신입</span>
+                              <span class="tag tag-fulltime">정규직</span>
+                            </span></td>
+                        </tr>
+                        <tr>
+                          <td class="job-label-cell"><span
+                              class="job-label">접수마감</span></td>
+                          <td><div class="job-value deadline-container">
+                                <span>~25.09.28 23:59</span>
+                                <span class="job-dday">(D-17)</span>
+                            </div></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+                <a
+                  href="https://careers.kakao.com/jobs/P-14207?skillSet=&part=TECHN"
+                  class="apply-btn">바로가기</a>
+              </div>
+            </div>
+
+            <!-- 피드백 섹션 -->
+            <div class="feedback-section">
+              <div class="feedback-header">Hoper의 한마디!</div>
+              <div class="testimonial">
+                "한 눈에 볼 수 있는 서비스였어요!" <br />
+                서비스 이용하면서 한 눈에 저에게 맞는 공고를 확인할 수 있어서<br />
+                빠르게 지원할 수 있었어요! 저처럼 귀찮은 분들한테 딱이에요!<br />
+                -김호프님-
+              </div>
+            </div>
+
+            <div class="feedback-request">
+              <a href="#" class="feedback">받아 본 채용공고가 어떠셨나요?</a>
+
+              <div class="feedback-description">
+                여러분의 이용 후기를 들려주세요! Hoper 분들의 의견을 반영하여<br />
+                서비스 업데이트에 노력을 기울이겠습니다.
+              </div>
+
+              <div class="footer-links">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScfHL-JZD5Fq23sNVXDgLzjzjbyaEsMujfwvcoplMc7gXPhYw/viewform?usp=header"
+                  class="footer-link">서비스 피드백하러 가기</a>
+                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74"
+                  class="footer-link">JOB FINDER 공식 페이지</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 푸터 -->
+          <div class="footer">
+            <div class="footer-brand">JOB FINDER</div>
+            <div class="footer-text">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeTUWAp7S3q36VwlXCSfkC5_r55caNbAm0Rsgnqd9wNp6dePw/viewform?usp=header">구독정보
+                변경하기</a> | <a
+                href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">FAQ</a><br />
+            </div>
+            <div class="footer-text">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLScWF5THutH-cfobPL2Nf_jTuedLthyJ_foYGjG65VzSmC3Gsw/viewform?usp=header">수신거부😭
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============= HTML 끝 ============= -->
+    </body>
+  </html>
