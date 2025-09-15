@@ -1,10 +1,10 @@
 import logging
 from typing import List, Dict, Any
-from services.email_service import SMTPEmailService
-from services.job_matcher import get_personalized_jobs
-from services.template_loader import TemplateLoader
-from services.user_service import UserService
-from services.email_logger import EmailLogger
+from local_version.services.email.stmp_service import SMTPEmailService
+from local_version.services.job.job_matcher import get_personalized_jobs
+from local_version.services.email.template_loader import TemplateLoader
+from local_version.services.user.user_service import UserService
+from local_version.services.log.email_logger import EmailLogger
 from config.email_config import EmailConfig
 
 logger = logging.getLogger(__name__)

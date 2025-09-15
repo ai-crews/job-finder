@@ -6,7 +6,7 @@ from email import encoders
 import smtplib
 import os
 import logging
-from services.email_template import EmailTemplate
+from local_version.services.email.template_renderer import EmailTemplate
 
 logger = logging.getLogger(__name__)
 

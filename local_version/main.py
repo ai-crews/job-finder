@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from services.email_batch_service import EmailBatchService
+from local_version.services.email.batch_service import EmailBatchService
 from config.logging_config import setup_logging
 from dotenv import load_dotenv
 
