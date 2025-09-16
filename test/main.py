@@ -31,7 +31,7 @@ def main():
         email_list=email_list,
         subject="📩 [JOB FINDER] 이번주 맞춤 채용공고 도착!",
         message_text="안녕하세요!\n\n이것은 테스트 이메일입니다.",
-        html_file_path="template/temp.html",
+        html_file_path="template/test_naver_ver2.html",
     )
 
     # 시트에 결과 기록
