@@ -1,1 +1,4 @@
 pymysql==1.1.2
+pandas
+gspread==5.7.2
+python-dotenv
