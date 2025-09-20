@@ -18,7 +18,7 @@ def main():
     # 환경변수 확인
     SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
     WORKSHEET_NAME = os.getenv("WORKSHEET_NAME", "설문지 응답 시트1")
-    DATA_FOLDER = "/Users/hwangeunbi/job-finder/test/data"
+    DATA_FOLDER = "data"
     TEMPLATE_PATH = "template/test_email.html"
 
     if not SPREADSHEET_ID:
