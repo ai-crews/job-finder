@@ -493,22 +493,3 @@ class JobMatcher:
         job_field_lower = job_field.lower()
 
         return any(keyword.lower() in job_field_lower for keyword in keywords)
-
-    def get_deadline_info(self, deadline_date: str) -> Dict[str, str]:
-        """마감일 정보 계산"""
-        try:
-            if deadline_date == "9999-12-31":
-                return {"date": "상시채용", "d_day": ""}
-
-            deadline = datetime.strptime(deadline_date, "%Y-%m-%d")
-            today = datetime.now()
-            diff = (deadline - today).days
-
-            if diff < 0:
-                return {"date": deadline_date, "d_day": "(마감)"}
-            elif diff == 0:
-                return {"date": deadline_date, "d_day": "(D-Day)"}
-            else:
-                return {"date": deadline_date, "d_day": f"(D-{diff})"}
-        except:
-            return {"date": deadline_date, "d_day": ""}

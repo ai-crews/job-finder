@@ -44,19 +44,8 @@ class EmailTemplateGenerator:
 
         # 사용자 이름 삽입
         user_name = user_data.get("성함 ", "테스터").strip()
-        if not user_name or user_name == "ㅠ":
-            user_name = "테스터"
 
         template = template.replace("테스터님", f"{user_name}님")
-
-        # 개인화된 메시지 추가
-        personalized_msg = self._generate_personalized_message(
-            user_data, len(matched_jobs)
-        )
-        template = template.replace(
-            "테스터님에게 가장 적합한 채용공고",
-            f"{user_name}님에게 가장 적합한 채용공고 ({len(matched_jobs)}개 발견!)",
-        )
 
         # 채용공고 섹션 생성
         job_cards_html = self._generate_job_cards(matched_jobs)
@@ -72,21 +61,6 @@ class EmailTemplateGenerator:
             template = template[:start_idx] + job_cards_html + template[end_idx:]
 
         return template
-
-    def _generate_personalized_message(self, user_data: Dict, job_count: int) -> str:
-        """개인화된 메시지 생성"""
-        preferred_jobs = [
-            user_data.get("희망 직무 1순위 (필수응답)", ""),
-            user_data.get("희망 직무 2순위", ""),
-            user_data.get("희망 직무 3순위", ""),
-        ]
-        preferred_jobs = [job for job in preferred_jobs if job]
-
-        if preferred_jobs:
-            job_text = ", ".join(preferred_jobs[:2])
-            return f"{job_text} 분야의 맞춤 채용공고 {job_count}개를 준비했습니다!"
-        else:
-            return f"맞춤 채용공고 {job_count}개를 준비했습니다!"
 
     def _generate_job_cards(self, matched_jobs: List[Dict]) -> str:
         """채용공고 카드들 HTML 생성"""
@@ -152,7 +126,7 @@ class EmailTemplateGenerator:
                                                 <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
                                             </td>
                                             <td style="padding: 3px 0; vertical-align: middle;">
-                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">{self._extract_job_category(job)}</span>
+                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">{job.get('processed_position_name')}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -191,33 +165,6 @@ class EmailTemplateGenerator:
             cards_html += card_html
 
         return cards_html
-
-    def _extract_job_category(self, job: Dict) -> str:
-        """직무 카테고리 추출"""
-        position = job.get("position_name", "")
-        title = job.get("job_title", "")
-
-        # AI/데이터 관련 키워드 확인
-        combined_text = f"{position} {title}".lower()
-
-        if any(
-            keyword in combined_text for keyword in ["ai", "인공지능", "머신러닝", "ml"]
-        ):
-            return "AI/머신러닝"
-        elif any(
-            keyword in combined_text
-            for keyword in ["데이터", "data", "분석", "analyst"]
-        ):
-            return "데이터분석"
-        elif any(
-            keyword in combined_text
-            for keyword in ["개발", "developer", "엔지니어", "engineer"]
-        ):
-            return "IT개발"
-        elif any(keyword in combined_text for keyword in ["기획", "전략", "strategy"]):
-            return "기획/전략"
-        else:
-            return "일반"
 
     def _generate_employment_tags(self, employment_type: str) -> str:
         """고용형태 태그 HTML 생성"""
