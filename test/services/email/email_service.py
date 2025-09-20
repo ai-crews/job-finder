@@ -1,30 +1,29 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email import encoders
-import os
-from .message_builder import load_html_template
-from .stmp_service import SMTPEmailService
+from .gmail_service import GmailAPIService
 
 
-def send_emails(
+def load_html_template(html_file_path):
+    """HTML 템플릿 파일 로드"""
+    try:
+        with open(html_file_path, "r", encoding="utf-8") as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"HTML 파일을 찾을 수 없습니다: {html_file_path}")
+        return None
+    except Exception as e:
+        print(f"HTML 파일 읽기 오류: {e}")
+        return None
+
+
+def send_emails_with_gmail_api(
     email_list, subject, message_text=None, html_file_path=None, attachment_path=None
 ):
-    """대량 이메일 발송"""
-    # 환경변수에서 SMTP 설정 읽기
-    smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")
-    smtp_port = int(os.getenv("SMTP_PORT", "587"))
-    sender_email = os.getenv("SENDER_EMAIL")
-    sender_password = os.getenv("SENDER_PASSWORD")
+    """Gmail API를 사용한 이메일 발송"""
 
-    if not sender_email or not sender_password:
-        raise ValueError("SENDER_EMAIL과 SENDER_PASSWORD 환경변수를 설정해주세요.")
-
-    # SMTP 서비스 초기화
-    email_service = SMTPEmailService(
-        smtp_server, smtp_port, sender_email, sender_password
-    )
+    # Gmail API 서비스 초기화
+    try:
+        gmail_service = GmailAPIService()
+    except Exception as e:
+        raise ValueError(f"Gmail API 인증 실패: {e}")
 
     # HTML 템플릿 로드
     html_content = None
@@ -37,7 +36,7 @@ def send_emails(
 
     for email in email_list:
         try:
-            result = email_service.send_message(
+            result = gmail_service.send_message(
                 to=email,
                 subject=subject,
                 message_text=message_text,
@@ -59,13 +58,3 @@ def send_emails(
 
     print(f"\n발송 완료! 성공: {success_count}개, 실패: {fail_count}개")
     return results_map
-
-
-def send_job_posting_email(recipient_email, html_file_path="templates/email.html"):
-    """채용 공고 이메일 발송"""
-    return send_emails(
-        email_list=[recipient_email],
-        subject="채용 공고입니다!",
-        message_text="채용 공고를 확인해 주세요.",
-        html_file_path=html_file_path,
-    )
