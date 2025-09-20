@@ -119,10 +119,23 @@ class JobMatcher:
 
         return filtered_jobs
 
+    def _is_education_match(self, user_edu_list, job_education):
+        for user_edu in user_edu_list:
+            # 직접 매칭
+            if user_edu in job_education:
+                return True
+
+            # 4년제 대학 매칭
+            if ("학사" in user_edu and "4년" in user_edu) and (
+                "대학" in job_education and "4년" in job_education
+            ):
+                return True
+
+        return False
+
     def filter_by_education(
         self, user_data: Dict, job_postings: List[Dict]
     ) -> List[Dict]:
-        """4단계 필터링: 학력"""
         filtered_jobs = []
         user_education = user_data.get(
             "찾고 계신 공고의 학력 조건을 선택해주세요. (졸업예정자도 선택 가능, 복수선택)",
@@ -139,7 +152,7 @@ class JobMatcher:
                 not education
                 or education == "학력_확인불가"
                 or not user_edu_list
-                or any(edu_type in education for edu_type in user_edu_list)
+                or self._is_education_match(user_edu_list, education)
             ):
                 filtered_jobs.append(job)
 

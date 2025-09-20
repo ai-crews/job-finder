@@ -1,1268 +1,801 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JOB FINDER 채용공고</title>
     <style>
-    /* ============= CSS 시작 ============= */
+        /* 지메일 모바일 최적화 */
+        @media screen and (max-width: 600px) {
+            .button-link {
+                display: block !important;
+                width: 100% !important;
+                min-height: 44px !important;
+                padding: 15px 20px !important;
+                font-size: 14px !important;
+                line-height: 1.2 !important;
+                text-align: center !important;
+                box-sizing: border-box !important;
+            }
+            
+            .button-table {
+                width: 100% !important;
+            }
+            
+            .button-td {
+                padding: 0 !important;
+            }
+
+            .header-info-mobile {
+                display: block !important;
+            }
+
+            .header-info-desktop {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;">
     
-    /* ============= 기본 초기화 및 이메일 호환성 ============= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-    "Noto Sans KR", "Malgun Gothic", sans-serif;
-  margin: 0 !important;
-  padding: 0 !important;
-  background: #f4f4f4;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-/* ============= 컨테이너 ============= */
-.email-wrapper {
-  width: 100% !important;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
-.email-container {
-  width: 100% !important;
-  max-width: 600px !important;
-  margin: 0 auto !important;
-  background: #ffffff;
-}
-
-/* ============= 헤더 ============= */
-.header {
-  background-color: #006c14 !important;
-  padding: 25px 20px !important;
-  text-align: left;
-}
-
-.header-title {
-  color: #ffc93e !important;
-  font-size: 22px !important;
-  font-weight: bold !important;
-  line-height: 1.3 !important;
-  margin: 0 0 10px 0 !important;
-}
-
-.header-subtitle {
-  color: #ffffff !important;
-  font-size: 15px !important;
-  line-height: 1.4 !important;
-  margin: 0 0 10px 0 !important;
-}
-
-.header-bottom-table {
-  width: 100% !important;
-  border-collapse: collapse !important;
-}
-
-.header-notice-cell {
-  text-align: left !important;
-  vertical-align: middle !important;
-}
-
-.header-date-cell {
-  text-align: right !important;
-  vertical-align: middle !important;
-  white-space: nowrap !important;
-}
-
-.header-notice {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.header-notice .emoji {
-  font-size: 11px;
-  line-height: 1;
-  vertical-align: middle;
-}
-
-.header-date {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-size: 13px !important;
-  text-align: right;
-}
-
-/* ============= 메인 콘텐츠 ============= */
-.main-content {
-  padding: 20px !important;
-}
-
-.section-title {
-  color: #6d6d6d !important;
-  font-size: 17px !important;
-  line-height: 1.4 !important;
-  margin: 0 0 20px 0 !important;
-}
-
-/* ============= 채용공고 카드 ============= */
-.job-card {
-  border: 1px solid #eeeeee !important;
-  border-radius: 8px !important;
-  background-color: #fafafa !important;
-  margin-bottom: 15px !important;
-  overflow: hidden;
-}
-
-.job-content {
-  padding: 15px !important;
-}
-
-.job-header-table {
-  width: 100% !important;
-  border-collapse: collapse !important;
-}
-
-.logo-cell {
-  width: 70px !important;
-  padding: 0 15px 0 0 !important;
-  vertical-align: top !important;
-}
-
-.company-logo {
-  width: 70px;
-  height: 115px;
-  background: #ffffff;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  color: #666;
-  border: 1px solid #eee;
-  font-weight: bold;
-}
-
-.company-logo img {
-  border: 0;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
-  line-height: 100%;
-  outline: none;
-  text-decoration: none;
-  -ms-interpolation-mode: bicubic;
-  object-fit: contain;
-}
-
-.info-cell {
-  vertical-align: top !important;
-  padding: 0 !important;
-}
-
-.company-name {
-  font-weight: bold !important;
-  font-size: 16px !important;
-  color: #000000 !important;
-  margin-bottom: 4px !important;
-}
-
-.star {
-  color: #ffd700 !important;
-  margin-right: 5px !important;
-}
-
-.job-info-table {
-  width: 100% !important;
-  border-collapse: collapse !important;
-  margin-top: 0 !important;
-}
-
-.job-info-table td {
-  padding: 3px 0 !important;
-  vertical-align: center !important;
-  border: none !important;
-}
-
-.job-label-cell {
-  width: 80px !important;
-  padding-right: 12px !important;
-}
-
-.job-label {
-  color: #444444 !important;
-  font-size: 14px !important;
-  font-weight: bold !important;
-  white-space: nowrap !important;
-}
-
-.job-value {
-  color: #000000 !important;
-  font-size: 14px !important;
-  line-height: 1.4 !important;
-}
-
-.deadline-container {
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-
-.job-dday {
-  font-weight: bold !important;
-  font-size: 14px !important;
-}
-
-/* ============= 태그 ============= */
-.tags {
-  display: inline !important;
-}
-
-.tag {
-  display: inline-block !important;
-  padding: 3px 10px !important;
-  border-radius: 4px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  margin-right: 5px !important;
-  margin-bottom: 2px !important;
-}
-
-.tag-entry {
-  background-color: #bdf4ff !important;
-  color: #000000 !important;
-}
-
-.tag-fulltime {
-  background-color: #eaffce !important;
-  color: #07632b !important;
-}
-
-.tag-intern {
-  background-color: #fff0ae !important;
-  color: #5e2e00 !important;
-}
-
-.tag-conversion {
-  background-color: #e6d7ff !important;
-  color: #4a148c !important;
-}
-
-/* ============= 버튼 ============= */
-.apply-btn {
-  display: block !important;
-  width: 100% !important;
-  background-color: #f9fafc !important;
-  border: 1px solid #e3e8ef !important;
-  border-radius: 6px !important;
-  padding: 12px !important;
-  text-align: center !important;
-  text-decoration: none !important;
-  color: #2e2e2e !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  margin-top: 15px !important;
-}
-
-/* ============= 피드백 섹션 개선 ============= */
-.feedback-section {
-  background: #f2fff6;
-  border: 1px solid #6ddeaf !important;
-  border-radius: 16px !important;
-  padding: 30px 25px !important;
-  margin: 35px 0 !important;
-  text-align: center !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-.feedback-content {
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-.feedback-emoji {
-  font-size: 36px !important;
-  display: block !important;
-  margin-bottom: 15px !important;
-  animation: bounce 2s infinite ease-in-out;
-}
-
-.feedback-title {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-  color: #000000 !important;
-  margin-bottom: 15px !important;
-  text-align: center !important;
-}
-
-.testimonial {
-  line-height: 1.6 !important;
-  margin: 15px 0 25px 0 !important;
-  font-size: 15px !important;
-  font-style: normal !important;
-}
-
-.feedback-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  padding: 14px 28px !important;
-  background-color: #2e2e2e !important;
-  color: #eaffce !important;
-  border-radius: 30px !important;
-  text-decoration: none !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
-  margin-top: 10px !important;
-  border: none !important;
-}
-
-.feedback-btn-icon {
-  margin-right: 8px !important;
-  font-size: 16px !important;
-}
-
-/* ============= 푸터 대폭 개선 ============= */
-.footer {
-  background: #006c14 !important;
-  padding: 30px 25px !important;
-  text-align: center !important;
-  position: relative !important;
-}
-
-
-
-.footer-brand-container {
-  margin-bottom: 5px !important;
-}
-
-.footer-brand {
-  color: #ffffff !important;
-  padding: 12px 24px !important;
-  font-size: 20px !important;
-  font-weight: 800 !important;
-  margin-bottom: 10px !important;
-  display: inline-block !important;
-  border-radius: 25px !important;
-  letter-spacing: 1.2px !important;
-  border: 2px solid #ffffff !important;
-}
-
-.footer-tagline {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-size: 13px !important;
-  font-style: italic !important;
-  font-weight: 300 !important;
-}
-
-.footer-nav {
-  margin-bottom: 25px !important;
-}
-
-.footer-nav-table {
-  width: 100% !important;
-  border-collapse: collapse !important;
-  max-width: 480px !important;
-  margin: 0 auto !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-radius: 12px !important;
-  overflow: hidden !important;
-}
-
-.footer-nav-cell {
-  padding: 15px 18px !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
-  vertical-align: middle !important;
-}
-
-.footer-nav-cell:last-child {
-  border-right: none !important;
-}
-
-.footer-link {
-  color: #ffffff !important;
-  text-decoration: none !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  transition: all 0.3s ease !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.footer-link:hover {
-  color: #ffc93e !important;
-  text-decoration: none !important;
-  transform: translateY(-1px) !important;
-}
-
-.footer-link-icon {
-  margin-right: 6px !important;
-  font-size: 14px !important;
-}
-
-.footer-divider {
-  width: 80px !important;
-  height: 2px !important;
-  background: #ffc93e !important;
-  margin: 20px auto !important;
-  border: none !important;
-  border-radius: 2px !important;
-  opacity: 0.8 !important;
-}
-
-.footer-text {
-  color: rgba(255, 255, 255, 0.8) !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
-  margin: 10px 0 !important;
-  font-weight: 400 !important;
-}
-
-.footer-text a {
-  color: #ffc93e !important;
-  text-decoration: none !important;
-  font-weight: 500 !important;
-}
-
-
-.footer-text a.gray {
-  color: #b5b5b5 !important;
-}
-  
-
-.footer-text a:hover {
-  color: #ffffff !important;
-  text-decoration: underline !important;
-}
-
-.footer-copyright {
-  color: rgba(255, 255, 255, 0.6) !important;
-  font-size: 11px !important;
-  margin-top: 20px !important;
-  padding-top: 20px !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
-  font-weight: 300 !important;
-}
-
-/* ============= 모바일 최적화 ============= */
-@media screen and (max-width: 600px) {
-  .email-container {
-    width: 100% !important;
-  }
-  
-  .header {
-    padding: 20px 15px !important;
-  }
-  
-  .main-content {
-    padding: 15px !important;
-  }
-  
-  .header-title {
-    font-size: 20px !important;
-  }
-  
-  .header-subtitle {
-    font-size: 15px !important;
-  }
-  
-  .section-title {
-    font-size: 16px !important;
-  }
-  
-  .company-name {
-    font-size: 15px !important;
-  }
-  
-  .job-label {
-    font-size: 13px !important;
-  }
-  
-  .job-label-cell {
-    width: 75px !important;
-  }
-  
-  .job-value {
-    font-size: 13px !important;
-  }
-  
-  .tag {
-    font-size: 12px !important;
-    padding: 3px 9px !important;
-  }
-  
-  .apply-btn {
-    font-size: 13px !important;
-    padding: 12px !important;
-  }
-  
-  .deadline-container {
-    display: block !important;
-    gap: 0 !important;
-  }
-  
-  .job-dday {
-    display: block !important;
-    margin-top: 2px !important;
-  }
-  
-  .header-bottom-table {
-    display: block !important;
-  }
-  
-  .header-notice-cell,
-  .header-date-cell {
-    display: block !important;
-    text-align: left !important;
-  }
-  
-  .header-date {
-    margin-top: 8px !important;
-    text-align: left !important;
-  }
-
-  /* 모바일 피드백 섹션 */
-  .feedback-section {
-    margin: 20px 0 !important;
-    padding: 25px 20px !important;
-  }
-
-  .feedback-emoji {
-    font-size: 32px !important;
-  }
-
-  .feedback-title {
-    font-size: 18px !important;
-  }
-
-  .testimonial {
-    font-size: 14px !important;
-  }
-
-  .feedback-btn {
-    padding: 12px 24px !important;
-    font-size: 14px !important;
-  }
-
-  /* 모바일 푸터 */
-  .footer {
-    padding: 25px 20px !important;
-  }
-
-  .footer-brand {
-    font-size: 18px !important;
-    padding: 10px 20px !important;
-  }
-
-  .footer-tagline {
-    font-size: 12px !important;
-  }
-
-  .footer-nav-table {
-    display: block !important;
-    background: none !important;
-  }
-
-  .footer-nav-cell {
-    display: block !important;
-    border-right: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-    padding: 12px 0 !important;
-    background: none !important;
-  }
-
-  .footer-nav-cell:last-child {
-    border-bottom: none !important;
-  }
-
-  .footer-link {
-    font-size: 13px !important;
-  }
-}
-
-    
-    
-    /* ============= CSS 끝 ============= */
-  </style>
-  </head>
-  <body>
-    <!-- ============= HTML 시작 ============= -->
-
-    <div class="email-wrapper">
-      <div class="email-container">
-        <!-- 헤더 -->
-        <div class="header">
-        <div class="header-title"></span>🎯 9월 2주차 채용공고 도착!</div>
-          <div class="header-subtitle">
-            '바로가기'를 누르면 자세한 정보를 볼 수 있어요!
-          </div>
-        <table class="header-bottom-table">
-          <tr>
-          <td class="header-notice-cell">
-            <div class="header-notice">
-              <span class="emoji">⚠️</span> 정확한 정보는 각 회사 홈페이지를 통해 확인해 주세요
-            </div>
-          </td>
-            <td class="header-date-cell">
-              <div class="header-date">2025.09.11</div>
-            </td>
-          </tr>
-        </table>
-        </div>
-
-        <!-- 메인 콘텐츠 -->
-        <div class="main-content">
-          <div class="section-title">
-            테스터님에게 가장 적합한 채용공고<br />
-            <small>(⭐️이 표시된 공고는 사용자님의 수신희망기업이에요!)</small>
-          </div>
-
-          <!-- 한국평가데이터 -->
-          <div class="job-card">
-            <div class="job-content">
-              <table class="job-header-table">
-                <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://daoift3qrrnil.cloudfront.net/company_groups/images/000/003/374/original/220210_KODATA_%EA%B5%AD%EB%AC%B8%EC%A1%B0%ED%95%A9.png?1684486232"
-                        alt="한국평가데이터" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">한국평가데이터</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">AI 개발, 기업 신용 위험관리
-                              컨설팅</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td>
-                            <div class="job-value deadline-container">
-                                <span>~25.09.14 23:00</span>
-                                <span class="job-dday">(D-3)</span>
-                            </div></td>
+    <!-- 전체 래퍼 테이블 -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f4f4f4; margin: 0; padding: 0;">
+        <tr>
+            <td align="center" style="padding: 0;">
+                
+                <!-- 메인 컨테이너 테이블 -->
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; margin: 0 auto; max-width: 600px;">
+                    
+                    <!-- 헤더 -->
+                    <tr>
+                        <td style="background-color: #00822c; padding: 25px 20px;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td>
+                                        <div style="color: #ffc93e; font-size: 22px; font-weight: bold; line-height: 1.3; margin: 0 0 10px 0;">🎯 9월 3주차 채용공고 도착!</div>
+                                        <div style="color: #ffffff; font-size: 15px; line-height: 1.4; margin: 0 0 10px 0;">'바로가기'를 누르면 자세한 정보를 볼 수 있어요!</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td>
+                                                    <!-- 데스크탑용 -->
+                                                    <table class="header-info-desktop" width="100%" border="0" cellspacing="0" cellpadding="0" style="display: table;">
+                                                        <tr>
+                                                            <td style="vertical-align: middle;">
+                                                                <span style="font-size: 14px; color: rgba(255, 255, 255, 0.8);">⚠️ 정확한 정보는 회사 홈페이지를 통해 확인해 주세요</span>
+                                                            </td>
+                                                            <td align="right" style="vertical-align: middle;">
+                                                                <span style="color: rgba(255, 255, 255, 0.8); font-size: 13px;">2025.09.18</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- 모바일용 -->
+                                                    <div class="header-info-mobile" style="display: none;">
+                                                        <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 5px;">⚠️정확한 정보는 회사 홈페이지를 통해 확인해 주세요</div>
+                                                        <div style="text-align: left;">
+                                                            <span style="color: rgba(255, 255, 255, 0.8); font-size: 13px;">2025.09.18</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- 메인 콘텐츠 -->
+                    <tr>
+                        <td style="padding: 20px;">
                             
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a href="https://kodata.applyin.co.kr/jobs/19590"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- KCB -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.bigdata-transportation.kr/cmm/fms/getImage.do?atchFileId=SLLRDOC_000000000003"
-                        alt="KCB" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">KCB</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">CB마케팅 및 분석지원 등</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.14 23:59</span>
-                                <span class="job-dday">(D-3)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://kcb.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=226621"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- IBK기업은행 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://wiki1.kr/images/thumb/d/dd/%EA%B8%B0%EC%97%85%EC%9D%80%ED%96%89_%EB%A1%9C%EA%B3%A0.png/200px-%EA%B8%B0%EC%97%85%EC%9D%80%ED%96%89_%EB%A1%9C%EA%B3%A0.png"
-                        alt="IBK기업은행" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">IBK기업은행</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">디지털</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.15 10:00</span>
-                                <span class="job-dday">(D-4)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://ibk.incruit.com/hire/viewhire.asp?projectid=124"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 하나은행 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png"
-                        alt="하나은행" class="company-logo-img" />
-
-                      </td>
-                    <td class="info-cell">
-                      <div class="company-name">하나은행</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">디지털/AI</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                            <td>
-                            <div class="job-value deadline-container">
-                                <span>2025.09.17 18:00</span>
-                                <span class="job-dday">(D-6)</span>
+                            <!-- 섹션 제목 -->
+                            <div style="color: #6d6d6d; font-size: 17px; line-height: 1.4; margin: 0 0 20px 0;">
+                                테스터님에게 가장 적합한 채용공고<br>
+                                <small>(⭐️이 표시된 공고는 사용자님의 수신희망기업이에요!)</small>
                             </div>
-                            </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
+                                <!-- 하나카드 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png" alt="하나카드" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">하나카드</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>                                                      
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.19 17:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-1)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://hanacard.incruit.com/hire/viewhire.asp?projectid=103" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- (주)두산 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://www.doosanrobotics.com/images/sns-img.png" alt="두산" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">두산</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">(전자BG) AI, (VCC) AI 전략기획 및 개발</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>      
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.19 18:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-1)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!--바로가기 버튼 영역 -->
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://career.doosan.com/dsp/sa/RecList.jsp?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- (주)두산 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://www.doosanrobotics.com/images/sns-img.png" alt="두산" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">두산</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">(디지털이노베이션BU) AI</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>   
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #fff0ae; color: #5e2e00; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">인턴</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #e6d7ff; color: #4a148c; font-size: 13px; font-weight: 500; border-radius: 4px;">전환형</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.19 18:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-1)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://career.doosan.com/dsp/sa/RecList.jsp?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01?q_REC_TYPE=C_REC_TYPE_01" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <!-- 현대모비스 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Hyundai_Mobis_Logo.svg/512px-Hyundai_Mobis_Logo.svg.png" alt="현대모비스" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">현대모비스</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">AI/ML 데이터분석</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>                               
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.22 10:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-4)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://careers.mobis.com/jobs-view?seq=3410" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                             <!-- 신한은행 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://www.shinhanci.co.kr/img/sub/img_ci.png?cache=none" alt="신한은행" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">신한은행</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">Bespoke 수시채용 - 모델링 (모형공학부)</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>                                                          
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.23 10:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-5)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://shinhan.recruiter.co.kr/career/jobs/83214" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- KB증권 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdoaWcmoWpggvou-q3kjJzna4pIg5c4LvGQ&s" alt="KB증권" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">KB증권</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">AI, 디지털</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>                                                          
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.25 17:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-7)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://kbsec.recruiter.co.kr/career/home" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- 카카오 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTEwMjlfMjM2/MDAxNjM1NDg2OTM3MDc2.-ThCEMQKLgncudeEeP9icT07wpITM2kkfQ-wpRy6jwcg.PLLaGRGtJ8fkqo2TpPv7rCoj04bKohgpSsNQNDqW11og.PNG.merrily1204/%EC%B9%B4%EC%B9%B4%EC%98%A4_%EB%85%B8%EB%9E%80%EC%83%89.png?type=w800" alt="카카오" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">카카오</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">[2026 신입공채] Tech - Tech 공통</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>   
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.28 23:59 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-10)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://careers.kakao.com/jobs/P-14207?skillSet=&part=TECHN" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- 카카오 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTEwMjlfMjM2/MDAxNjM1NDg2OTM3MDc2.-ThCEMQKLgncudeEeP9icT07wpITM2kkfQ-wpRy6jwcg.PLLaGRGtJ8fkqo2TpPv7rCoj04bKohgpSsNQNDqW11og.PNG.merrily1204/%EC%B9%B4%EC%B9%B4%EC%98%A4_%EB%85%B8%EB%9E%80%EC%83%89.png?type=w800" alt="카카오" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">카카오</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">[2026 신입공채] Service & Business - AI 서비스 기획</span>
+                                                            </td>
+                                                        </tr>                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>   
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.28 23:59 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-10)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://careers.kakao.com/jobs/P-14209" class="button-link" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- 현대해상 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 15px;">
+                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
+                                                        <tr>
+                                                            <td align="center" style="vertical-align: middle;">
+                                                                <img src="https://mblogthumb-phinf.pstatic.net/20160728_259/ppanppane_1469695930418AMF3t_PNG/%C7%F6%B4%EB%C7%D8%BB%F3_%B7%CE%B0%ED_%284%29.png?type=w800" alt="카카오" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td style="vertical-align: top;">
+                                                    <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">현대해상</div>
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">디지털/데이터분석</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">카드업 일반</span>
+                                                            </td>
+                                                        </tr>   
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #bdf4ff; color: #000000; font-size: 13px; font-weight: 500; margin-right: 5px; border-radius: 4px;">신입</span>
+                                                                <span style="display: inline-block; padding: 3px 10px; background-color: #eaffce; color: #07632b; font-size: 13px; font-weight: 500; border-radius: 4px;">정규직</span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
+                                                            </td>
+                                                            <td style="padding: 3px 0; vertical-align: middle;">
+                                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">~25.09.29 18:00 </span>
+                                                                <span style="font-weight: bold; font-size: 14px; color: #000000;">(D-11)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table class="button-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 15px;">
+                                            <tr>
+                                                <td class="button-td" style="padding: 0;">
+                                                    <a href="https://hi.recruiter.co.kr/career/jobs/82794" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; background-color: #f9fafc; border: 1px solid #e3e8ef; padding: 15px 20px; text-align: center; text-decoration: none; color: #2e2e2e; font-size: 14px; font-weight: 500; border-radius: 8px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 20px; line-height: 1.2;"> 바로가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- 피드백 섹션 -->
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f2fff6; border: 1px solid #6ddeaf; margin: 35px 0; border-radius: 16px;">
+                                <tr>
+                                    <td style="padding: 30px 25px; text-align: center;">
+                                        <div style="font-size: 36px; margin-bottom: 15px;">🤔</div>
+                                        <div style="font-size: 20px; font-weight: 700; color: #000000; margin-bottom: 15px; text-align: center;">받아본 채용공고 어떠셨나요?</div>
+                                        <div style="line-height: 1.6; margin: 15px 0 25px 0; font-size: 15px; color: #000000;">
+                                            여러분의 소중한 의견을 들려주세요!<br>
+                                            Hoper 분들의 피드백을 반영하여 더 나은 서비스로 찾아뵙겠습니다.
+                                        </div>
+                                        <table border="0" cellspacing="0" cellpadding="0" style="margin: 10px auto 0;">
+                                            <tr>
+                                                <td style="padding: 0;">
+                                                    <a href="https://forms.gle/fLufHcTKo9nVV76w9" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 16px 32px; background-color: #2e2e2e; color: #eaffce; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 30px; box-sizing: border-box; -webkit-text-size-adjust: none; min-height: 24px;">💌 피드백 하러가기</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </td>
+                    </tr>
+                    
+                    <!-- 푸터 -->
+                    <tr>
+                        <td style="background-color: #00822c; padding: 30px 25px;" align="center">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+                            
+                            <!-- 로고 -->
+                            <tr>
+                                <td align="center" style="padding-bottom: 10px;">
+                                    <table border="0" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
+                                        <tr>
+                                            <td align="center" style="border: 2px solid #ffffff; border-radius: 25px; padding: 12px 24px;">
+                                                <span style="color:#ffffff; font-size:20px; font-weight:800; letter-spacing:1.2px; display: block;">JOB FINDER</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 메시지 -->
+                            <tr>
+                                <td align="center" style="padding-bottom: 15px; text-align: center;">
+                                    <div style="text-align: center; margin: 0 auto;">
+                                        <span style="color:rgba(255,255,255,0.9); font-size:13px; font-style:italic; font-weight:300; display: inline-block;">
+                                            당신의 성공적인 커리어를 응원합니다 🎯
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- 링크 -->
+                            <tr>
+                                <td align="center" style="padding-bottom: 10px; text-align: center;">
+                                    <div style="text-align: center; margin: 0 auto;">
+                                        <span style="color:rgba(255,255,255,0.8); font-size:14px; font-weight:400; display: inline-block;">
+                                            <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74" target="_blank" rel="noopener noreferrer" style="color:#ffc93e; text-decoration:none; font-weight:500;">공식 페이지</a> | 
+                                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTUWAp7S3q36VwlXCSfkC5_r55caNbAm0Rsgnqd9wNp6dePw/viewform?usp=header" style="color:#ffc93e; text-decoration:none; font-weight:500;">구독정보 변경</a> | 
+                                            <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74" target="_blank" rel="noopener noreferrer" style="color:#ffc93e; text-decoration:none; font-weight:500;">FAQ</a>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- 수신거부 -->
+                            <tr>
+                                <td align="center" style="padding-bottom: 20px; text-align: center;">
+                                    <div style="text-align: center; margin: 0 auto;">
+                                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScWF5THutH-cfobPL2Nf_jTuedLthyJ_foYGjG65VzSmC3Gsw/viewform?usp=header" target="_blank" rel="noopener noreferrer" style="color:#b5b5b5; font-size:14px; text-decoration:none; display: inline-block;">수신거부 😭</a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- 저작권 -->
+                            <tr>
+                                <td align="center" style="border-top:1px solid rgba(255,255,255,0.2); padding-top:20px; text-align: center;">
+                                    <div style="text-align: center; margin: 0 auto;">
+                                        <span style="color:rgba(255,255,255,0.6); font-size:11px; font-weight:300; display: inline-block;">
+                                            © 2025 JOB FINDER. All rights reserved.
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+
+
                 </table>
-                <a
-                  href="https://hanabank.incruit.com/hire/viewhire.asp?projectid=114"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- LG CNS -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lg.co.kr/images/common/default_og_image_new.jpg"
-                        alt="LG CNS" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">LG CNS</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">AI, Consulting</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>2025.09.18 18:00</span>
-                                <span class="job-dday">(D-7)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a href="https://careers.lg.com/apply/detail?id=1000781"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 넥슨 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.civicnews.com/news/photo/201902/20314_27906_854.png"
-                        alt="넥슨게임즈" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">넥슨게임즈</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">[콘텐츠분석센터] FunQA</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-intern">인턴</span>
-                              <span class="tag tag-conversion">전환형</span>
-
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.15 17:00</span>
-                                <span class="job-dday">(D-4)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://careers.nexon.com/recruit/8702?_gl=1*1a5jdkm*_ga*NDkxNDc5ODg5LjE3NTc1MTU0MTQ.*_ga_CFD7BMN3PP*czE3NTc1MTU0MTMkbzEkZzEkdDE3NTc1MTU0NDMkajMwJGwwJGgw"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 롯데이노베이트 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
-                        alt="롯데이노베이트" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">롯데이노베이트</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">NLP AI (AI기술팀)</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.15 23:00</span>
-                                <span class="job-dday">(D-4)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659544"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 롯데하이마트 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
-                        alt="롯데하이마트" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">롯데하이마트</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">Data, AI</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-intern">인턴</span>
-                              <span class="tag tag-conversion">전환형</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.15 23:00</span>
-                                <span class="job-dday">(D-4)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21667415?compcd=?id=bookmark1001"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 롯데케미칼 AI -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
-                        alt="롯데케미칼" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">롯데케미칼</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">AI</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.16 23:00</span>
-                                <span class="job-dday">(D-5)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659315?compcd=?id=bookmark1002"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-            
-            <!-- 롯데케미칼 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
-                        alt="롯데케미칼" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">롯데케미칼</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">DT</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.16 23:00</span>
-                                <span class="job-dday">(D-5)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21659400?compcd=?id=bookmark1003"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 롯데호텔 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lotte.co.kr/common/m/img/img_ci_01.png"
-                        alt="롯데호텔" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">롯데호텔</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">DX</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-intern">인턴</span>
-                              <span class="tag tag-conversion">전환형</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.17 23:00</span>
-                                <span class="job-dday">(D-6)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://recruit.lotte.co.kr/apply/announcement/detail/21660555?compcd=?id=bookmark1004"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 라이나생명 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://www.lina.co.kr/_nuxt/img/Chubb_LinaLifeLogo_2.21259e6306bc7f8fe5adc7c5d3a1af76.png"
-                        alt="라이나생명" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">라이나생명</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">AI 엔지니어, 데이터</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.19 19:00</span>
-                                <span class="job-dday">(D-8)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a href="https://linakorea.careerlink.kr/jobs/RC20250830020258"
-                  class="apply-btn" target="_blank" rel="noopener noreferrer">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 카카오 -->
-            <div class="job-card">
-              <div class="job-content">
-                <table class="job-header-table">
-                  <tr>
-                  <td class="logo-cell">
-                    <div class="company-logo">
-                      <img
-                        src="https://mblogthumb-phinf.pstatic.net/MjAyMTEwMjlfMjM2/MDAxNjM1NDg2OTM3MDc2.-ThCEMQKLgncudeEeP9icT07wpITM2kkfQ-wpRy6jwcg.PLLaGRGtJ8fkqo2TpPv7rCoj04bKohgpSsNQNDqW11og.PNG.merrily1204/%EC%B9%B4%EC%B9%B4%EC%98%A4_%EB%85%B8%EB%9E%80%EC%83%89.png?type=w800"
-                        alt="카카오" class="company-logo-img" />
-                    </td>
-                    <td class="info-cell">
-                      <div class="company-name">카카오</div>
-                      <table class="job-info-table">
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">모집부문</span></td>
-                          <td><span class="job-value">[2026 신입공채] Tech - Tech
-                              공통</span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">고용형태</span></td>
-                          <td><span class="tags">
-                              <span class="tag tag-entry">신입</span>
-                              <span class="tag tag-fulltime">정규직</span>
-                            </span></td>
-                        </tr>
-                        <tr>
-                          <td class="job-label-cell"><span
-                              class="job-label">접수마감</span></td>
-                          <td><div class="job-value deadline-container">
-                                <span>~25.09.28 23:59</span>
-                                <span class="job-dday">(D-17)</span>
-                            </div></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-                <a
-                  href="https://careers.kakao.com/jobs/P-14207?skillSet=&part=TECHN"
-                  class="apply-btn">바로가기</a>
-              </div>
-            </div>
-
-            <!-- 피드백 섹션 -->
-            <div class="feedback-section">
-              <div class="feedback-content">
-                <span class="feedback-emoji">🤔</span>
-                <div class="feedback-title">받아본 채용공고 어떠셨나요?</div>
-                <div class="testimonial">
-                    여러분의 소중한 의견을 들려주세요!<br/>
-                    Hoper 분들의 피드백을 반영하여 더 나은 서비스로 찾아뵙겠습니다.
-                </div>
-                <a href="https://forms.gle/UuUfENJ4oKtVprQH8" 
-                  class="feedback-btn" target="_blank" rel="noopener noreferrer">
-                  <span class="feedback-btn-icon">💌</span>
-                  피드백 하러가기
-                </a>
-              </div>
-            </div>
-
-
-          </div>
-
-          <!-- 푸터 -->
-          <div class="footer">
-            <div class="footer-brand-container">
-              <div class="footer-brand">JOB FINDER</div>
-              <div class="footer-tagline">당신의 성공적인 커리어를 응원합니다 🎯</div>
-            </div>
-            
-            <div class="footer-text">
-                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">공식 페이지</a> | 
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTUWAp7S3q36VwlXCSfkC5_r55caNbAm0Rsgnqd9wNp6dePw/viewform?usp=header">구독정보 변경</a> | 
-                <a href="http://aicrews-jobfinder.notion.site/jobfinder?pvs=74">FAQ</a>
-            </div>
-
-        
-            
-<div class="footer-text">
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLScWF5THutH-cfobPL2Nf_jTuedLthyJ_foYGjG65VzSmC3Gsw/viewform?usp=header" 
-     class="footer-link gray" target="_blank" rel="noopener noreferrer">
-    수신거부 😭
-  </a>
-</div>
-            
-            <div class="footer-copyright">
-              © 2025 JOB FINDER. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ============= HTML 끝 ============= -->
-    </body>
-  </html>
+                
+            </td>
+        </tr>
+    </table>
+    
+</body>
+</html>

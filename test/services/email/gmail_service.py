@@ -64,24 +64,24 @@ class GmailAPIService:
             try:
                 with open(self.token_file, "rb") as token:
                     creds = pickle.load(token)
-                print("📁 기존 Gmail 토큰 발견")
+                print(" 기존 Gmail 토큰 발견")
             except Exception as e:
-                print(f"⚠️ 기존 토큰 로드 실패: {e}")
+                print(f" 기존 토큰 로드 실패: {e}")
                 creds = None
 
         # 유효한 자격 증명이 없으면 로그인 플로우 실행
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
-                print("🔄 Gmail 토큰 갱신 중...")
+                print(" Gmail 토큰 갱신 중...")
                 try:
                     creds.refresh(Request())
-                    print("✅ Gmail 토큰 갱신 성공")
+                    print(" Gmail 토큰 갱신 성공")
                 except Exception as e:
-                    print(f"❌ 토큰 갱신 실패: {e}")
+                    print(f" 토큰 갱신 실패: {e}")
                     creds = None
 
             if not creds:
-                print("🌐 브라우저에서 Gmail 권한 승인...")
+                print(" 브라우저에서 Gmail 권한 승인...")
 
                 try:
                     flow = InstalledAppFlow.from_client_secrets_file(
@@ -90,7 +90,7 @@ class GmailAPIService:
                     creds = flow.run_local_server(
                         port=0, prompt="select_account", access_type="offline"
                     )
-                    print("✅ Gmail 권한 승인 완료")
+                    print(" Gmail 권한 승인 완료")
                 except Exception as e:
                     raise ValueError(f"❌ OAuth 인증 실패: {e}")
 
@@ -98,13 +98,13 @@ class GmailAPIService:
             try:
                 with open(self.token_file, "wb") as token:
                     pickle.dump(creds, token)
-                print(f"✅ Gmail 토큰이 {self.token_file}에 저장되었습니다")
+                print(f" Gmail 토큰이 {self.token_file}에 저장되었습니다")
             except Exception as e:
-                print(f"⚠️ 토큰 저장 실패: {e}")
+                print(f" 토큰 저장 실패: {e}")
 
         try:
             service = build("gmail", "v1", credentials=creds)
-            print("✅ Gmail API 서비스 초기화 완료")
+            print(" Gmail API 서비스 초기화 완료")
             return service
         except Exception as e:
             raise ValueError(f"❌ Gmail API 서비스 초기화 실패: {e}")

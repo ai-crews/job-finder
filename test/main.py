@@ -19,7 +19,7 @@ def main():
     SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
     WORKSHEET_NAME = os.getenv("WORKSHEET_NAME", "설문지 응답 시트1")
     DATA_FOLDER = "/Users/hwangeunbi/job-finder/test/data"
-    TEMPLATE_PATH = "template/test_naver_ver2.html"
+    TEMPLATE_PATH = "template/test_email.html"
 
     if not SPREADSHEET_ID:
         print("❌ .env 파일에 SPREADSHEET_ID를 설정해주세요.")
