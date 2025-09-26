@@ -30,17 +30,27 @@ class JobMatcher:
             "카카오": ["카카오","Kakao"],
         }
         return mapping
-
+    
     def _load_all_job_data(self) -> List[Dict]:
         """모든 채용공고 JSON 파일 로드"""
         job_data = []
+        print(f"데이터 폴더 경로: {self.data_folder}")
+        
         for root, dirs, files in os.walk(self.data_folder):
+            print(f"탐색 중인 폴더: {root}")
+            print(f"하위 폴더들: {dirs}")
+            print(f"파일들: {files}")
+            
             for filename in files:
                 if filename.endswith(".json"):
                     file_path = os.path.join(root, filename)
+                    print(f"JSON 파일 로딩 시도: {file_path}")
                     try:
                         with open(file_path, "r", encoding="utf-8") as f:
                             data = json.load(f)
+                            company_name = data.get("company_name", "")
+                            print(f"  성공: 회사명={company_name}")
+                            
                             if "company_name" not in data or not data["company_name"]:
                                 company_from_filename = (
                                     self._extract_company_from_filename(filename)
@@ -49,9 +59,12 @@ class JobMatcher:
                                     data["company_name_from_file"] = (
                                         company_from_filename
                                     )
+                                    print(f"  파일명에서 추출한 회사명: {company_from_filename}")
                             job_data.append(data)
                     except Exception as e:
                         print(f"파일 로드 실패 {filename}: {e}")
+        
+        print(f"총 로드된 공고 수: {len(job_data)}")
         return job_data
 
     def _extract_company_from_filename(self, filename: str) -> str:
@@ -220,16 +233,16 @@ class JobMatcher:
                 filtered_jobs.append(job)
         return filtered_jobs
 
-    def match_jobs_for_user(self, user_data: Dict, top_n: int = 10) -> List[Dict]:
-        """사용자에게 맞는 채용공고 매칭"""
+    def match_jobs_for_user(self, user_data: Dict, top_n: int = 100) -> List[Dict]:
+        """사용자에게 맞는 채용공고 매칭 - 디버깅 버전"""
         print("=== 필터링 시작 ===")
 
         # 사용자 선호도 추출
         target_companies = self._extract_target_companies(user_data)
         target_jobs = [
             user_data.get("희망 직무 1순위 (필수응답)", ""),
-            user_data.get("희망 직무 2순위 ", ""),  # 공백 포함!
-            user_data.get("희망 직무 3순위 ", ""),  # 공백 포함!
+            user_data.get("희망 직무 2순위 ", ""),
+            user_data.get("희망 직무 3순위 ", ""),
         ]
         target_jobs = [job.strip() for job in target_jobs if job.strip()]
         target_employment_types = self._parse_employment_types(
@@ -240,18 +253,43 @@ class JobMatcher:
         print(f"사용자 희망 회사: {target_companies}")
         print(f"사용자 희망 고용형태: {target_employment_types}")
 
+        # 🔍 카카오 공고 추적 시작
+        kakao_jobs_initial = [job for job in self.job_data if "카카오" in job.get("company_name", "")]
+        print(f"\n🔍 초기 카카오 공고: {len(kakao_jobs_initial)}개")
+        for job in kakao_jobs_initial:
+            print(f"   - {job.get('company_name')}: {job.get('processed_position_name')} ({job.get('employment_type')})")
+
         # 단계별 필터링
         step1_jobs = self.apply_basic_filters(user_data, self.job_data)
         print(f"1단계(경력) 후: {len(step1_jobs)}개 공고")
+        
+        # 🔍 1단계 후 카카오 공고
+        kakao_step1 = [job for job in step1_jobs if "카카오" in job.get("company_name", "")]
+        print(f"🔍 1단계 후 카카오 공고: {len(kakao_step1)}개")
 
         step2_jobs = self.filter_by_employment_type(user_data, step1_jobs)
         print(f"2단계(고용형태) 후: {len(step2_jobs)}개 공고")
+        
+        # 🔍 2단계 후 카카오 공고
+        kakao_step2 = [job for job in step2_jobs if "카카오" in job.get("company_name", "")]
+        print(f"🔍 2단계 후 카카오 공고: {len(kakao_step2)}개")
 
         step3_jobs = self.filter_by_job_role(user_data, step2_jobs)
         print(f"3단계(직무) 후: {len(step3_jobs)}개 공고")
+        
+        # 🔍 3단계 후 카카오 공고
+        kakao_step3 = [job for job in step3_jobs if "카카오" in job.get("company_name", "")]
+        print(f"🔍 3단계 후 카카오 공고: {len(kakao_step3)}개")
+        if kakao_step3:
+            for job in kakao_step3:
+                print(f"   - 매칭된 카카오 공고: {job.get('processed_position_name')}")
 
         final_jobs = self.filter_by_education(user_data, step3_jobs)
         print(f"4단계(학력) 후: {len(final_jobs)}개 공고")
+        
+        # 🔍 최종 카카오 공고
+        kakao_final = [job for job in final_jobs if "카카오" in job.get("company_name", "")]
+        print(f"🔍 최종 필터링 후 카카오 공고: {len(kakao_final)}개")
 
         if not final_jobs:
             print("필터링 후 추천할 공고가 없습니다")
@@ -262,12 +300,18 @@ class JobMatcher:
         other_jobs = []
 
         for job in final_jobs:
-            company_name = job.get("company_name", "") or job.get(
-                "company_name_from_file", ""
-            )
-            if self.is_preferred_company(target_companies, company_name):
+            company_name = job.get("company_name", "") or job.get("company_name_from_file", "")
+            is_preferred = self.is_preferred_company(target_companies, company_name)
+            
+            # 🔍 카카오 공고 희망기업 매칭 확인
+            if "카카오" in company_name:
+                print(f"🔍 카카오 희망기업 매칭 확인: '{company_name}' -> {is_preferred}")
+                print(f"   희망기업 리스트: {target_companies}")
+            
+            if is_preferred:
                 preferred_jobs.append(job)
-                print(f"희망기업 매칭: {company_name}")
+                if "카카오" in company_name:
+                    print(f"✅ 카카오 희망기업으로 분류됨: {company_name}")
             else:
                 other_jobs.append(job)
 
@@ -296,6 +340,10 @@ class JobMatcher:
         preferred_jobs.sort(key=sort_key)
         other_jobs.sort(key=sort_key)
         top_jobs = (preferred_jobs + other_jobs)[:top_n]
+
+        # 🔍 최종 결과에서 카카오 공고 확인
+        kakao_in_result = [job for job in top_jobs if "카카오" in job.get("company_name", "")]
+        print(f"🔍 최종 결과에 포함된 카카오 공고: {len(kakao_in_result)}개")
 
         print(f"추천 완료: {len(top_jobs)}개 공고 선정")
 
