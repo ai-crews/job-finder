@@ -6,34 +6,34 @@ from datetime import datetime
 class EmailTemplateGenerator:
     def __init__(self, template_path: str):
         self.template_path = template_path
+        self.company_logos = self._load_company_logos()
 
-    def get_company_logo(self, company_name: str) -> str:
-        """회사 로고 URL 반환 - 더 스마트한 매칭"""
-
-        # 그룹명으로 매칭 (예: "한화시스템/ICT" → "한화" 그룹 로고)
-        company_groups = {
+    def _load_company_logos(self) -> Dict[str, str]:
+        """회사 로고 URL 매핑"""
+        return {
             "삼성": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
+            "삼성전자": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
+            "삼성SDS": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
             "SK": "https://www.sk.co.kr/lib/images/desktop/about/ci-color-img01_lg.png",
             "LG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/LG_logo_%282014%29.svg/1200px-LG_logo_%282014%29.svg.png",
-            "토스": "https://framerusercontent.com/images/EhEElRcoy4v5Y9uyUj3XkTWg.jpg",
+            "쿠팡": "https://news.coupang.com/wp-content/uploads/2023/01/coupang-bi-brand-logo-230109-01.jpg",
             "카카오": "https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/mediakit/47e79e4a019300001.png",
             "네이버": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Naver_Logotype.svg/2560px-Naver_Logotype.svg.png",
             "NAVER": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Naver_Logotype.svg/2560px-Naver_Logotype.svg.png",
-            "한화": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Hanwha_Logo.svg/1200px-Hanwha_Logo.svg.png",
-            "신한": "https://www.shinhanci.co.kr/img/sub/img_ci.png?cache=none",
-            "하나": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
-            "KB": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdoaWcmoWpggvou-q3kjJzna4pIg5c4LvGQ&s",
-            "우리": "https://www.woorifg.com/img/sub/img_woori_ci.png",
-            "쿠팡": "https://news.coupang.com/wp-content/uploads/2023/01/coupang-bi-brand-logo-230109-01.jpg",
+            "하나카드": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
+            "하나은행": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
+            "두산": "https://www.doosanrobotics.com/images/sns-img.png",
+            "현대모비스": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Hyundai_Mobis_Logo.svg/512px-Hyundai_Mobis_Logo.svg.png",
+            "신한은행": "https://www.shinhanci.co.kr/img/sub/img_ci.png?cache=none",
+            "KB증권": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdoaWcmoWpggvou-q3kjJzna4pIg5c4LvGQ&s",
+            "현대해상": "https://mblogthumb-phinf.pstatic.net/20160728_259/ppanppane_1469695930418AMF3t_PNG/%C7%F6%B4%EB%C7%D8%BB%F3_%B7%CE%B0%ED_%284%29.png?type=w800",
+            "토스": "https://framerusercontent.com/images/EhEElRcoy4v5Y9uyUj3XkTWg.jpg",
+            "우아한형제들": "https://woowahan-cdn.woowahan.com/static/image/share_kor.jpg",
+            "셀트리온": "https://www.celltrion.com/front/assets/common/images/introduce/img_brand_symbol.png",
+            "현대자동차": "https://www.hyundai.com/content/dam/hyundai/kr/ko/images/common/sns/og-image-hyundai-motors.jpg",
+            "카카오뱅크": "https://daoift3qrrnil.cloudfront.net/company_groups/images/000/004/699/original/img_%285%29.png?1700663411",
+            "기아": "https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2021%2F01%2Fkia-motors-new-logo-brand-slogan-officially-revealed-01.jpg?q=75&w=800&cbr=1&fit=max",
         }
-
-        # 회사명에서 그룹명 찾기
-        for group_name, logo_url in company_groups.items():
-            if group_name in company_name:
-                return logo_url
-
-        # 3. 기본 플레이스홀더
-        return "https://via.placeholder.com/68x113?text=Logo"
 
     def generate_personalized_email(
         self, user_data: Dict, matched_jobs: List[Dict]
@@ -41,12 +41,10 @@ class EmailTemplateGenerator:
         """개인화된 이메일 HTML 생성"""
         with open(self.template_path, "r", encoding="utf-8") as f:
             template = f.read()
-        # 날짜 삽입
-        current_date = datetime.now().strftime("%Y년 %m월 %d일")
-        template = template.replace("2025.09.18", current_date)
 
         # 사용자 이름 삽입
         user_name = user_data.get("성함 ", "테스터").strip()
+
         template = template.replace("테스터님", f"{user_name}님")
 
         # 채용공고 섹션 생성
@@ -82,9 +80,11 @@ class EmailTemplateGenerator:
                 job.get("employment_type", "확인불가")
             )
 
-            # 회사 로고 URL - 개선된 방법 사용
+            # 회사 로고 URL
             company_name = job["company_name"]
-            logo_url = self.get_company_logo(company_name)
+            logo_url = self.company_logos.get(
+                company_name, "https://via.placeholder.com/68x113?text=Logo"
+            )
 
             # 희망기업 표시
             star_icon = "⭐️ " if is_preferred else ""
@@ -96,13 +96,13 @@ class EmailTemplateGenerator:
 
             card_html = f"""
             <!-- {company_name} -->
-            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px; min-width: 100%; max-width: 100%;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #eeeeee; background-color: #fafafa; margin-bottom: 15px; border-radius: 8px;">
                 <tr>
                     <td style="padding: 15px;">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="min-width: 100%; max-width: 100%;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td style="padding-right: 15px; vertical-align: top; width: 70px; min-width: 70px; max-width: 70px;">
-                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px; width: 70px; min-width: 70px; max-width: 70px;">
+                                <td width="70" style="padding-right: 15px; vertical-align: top;">
+                                    <table width="70" height="130" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border: 1px solid #eee; border-radius: 6px;">
                                         <tr>
                                             <td align="center" style="vertical-align: middle;">
                                                 <img src="{logo_url}" alt="{company_name}" height="auto" style="display: block; max-width: 68px; max-height: 113px;">
@@ -114,32 +114,32 @@ class EmailTemplateGenerator:
                                     <div style="font-weight: bold; font-size: 16px; color: #000000; margin-bottom: 4px;">{star_icon}{company_name}</div>
                                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                         <tr>
-                                            <td style="padding: 3px 12px 3px 0; vertical-align: middle; width: 80px; min-width: 80px; max-width: 80px;">
-                                                <span style="color: #444444; font-size: 14px; font-weight: bold; white-space: nowrap;">모집부문</span>
+                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">모집부문</span>
                                             </td>
                                             <td style="padding: 3px 0; vertical-align: middle;">
-                                                <span style="color: #000000; font-size: 14px; line-height: 1.4; word-break: break-word;">{position_name}</span>
+                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">{position_name}</span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 3px 12px 3px 0; vertical-align: middle; width: 80px; min-width: 80px; max-width: 80px;">
-                                                <span style="color: #444444; font-size: 14px; font-weight: bold; white-space: nowrap;">직무명</span>
+                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">직무명</span>
                                             </td>
                                             <td style="padding: 3px 0; vertical-align: middle;">
-                                                <span style="color: #000000; font-size: 14px; line-height: 1.4; word-break: break-word;">{job.get('processed_position_name')}</span>
+                                                <span style="color: #000000; font-size: 14px; line-height: 1.4;">{job.get('processed_position_name')}</span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 3px 12px 3px 0; vertical-align: middle; width: 80px; min-width: 80px; max-width: 80px;">
-                                                <span style="color: #444444; font-size: 14px; font-weight: bold; white-space: nowrap;">고용형태</span>
+                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">고용형태</span>
                                             </td>
                                             <td style="padding: 3px 0; vertical-align: middle;">
                                                 {employment_tags}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td style="padding: 3px 12px 3px 0; vertical-align: middle; width: 80px; min-width: 80px; max-width: 80px;">
-                                                <span style="color: #444444; font-size: 14px; font-weight: bold; white-space: nowrap;">접수마감</span>
+                                            <td width="80" style="padding: 3px 12px 3px 0; vertical-align: middle;">
+                                                <span style="color: #444444; font-size: 14px; font-weight: bold;">접수마감</span>
                                             </td>
                                             <td style="padding: 3px 0; vertical-align: middle;">
                                                 <span style="color: #000000; font-size: 14px; line-height: 1.4;">{deadline_info['date']}</span>
@@ -165,6 +165,105 @@ class EmailTemplateGenerator:
             cards_html += card_html
 
         return cards_html
+    
+    def generate_no_jobs_email(self, user_data: Dict) -> str:
+        """매칭된 채용공고가 없을 때 이메일 HTML 생성"""
+        with open(self.template_path, "r", encoding="utf-8") as f:
+            template = f.read()
+        
+        # 날짜 삽입
+        current_date = datetime.now().strftime("%Y년 %m월 %d일")
+        template = template.replace("2025.09.18", current_date)
+
+        # 사용자 이름 삽입
+        user_name = user_data.get("성함 ", "테스터").strip()
+        template = template.replace("테스터님", f"{user_name}님")
+
+        # 빈 결과 메시지 HTML 생성
+        no_jobs_html = self._generate_no_jobs_message(user_data)
+
+        # 기존 채용공고 섹션을 빈 결과 메시지로 교체
+        start_marker = "<!-- 하나카드 -->"
+        end_marker = "<!-- 피드백 섹션 -->"
+
+        start_idx = template.find(start_marker)
+        end_idx = template.find(end_marker)
+
+        if start_idx != -1 and end_idx != -1:
+            template = template[:start_idx] + no_jobs_html + template[end_idx:]
+
+        return template
+    
+    def _generate_no_jobs_message(self, user_data: Dict) -> str:
+        """매칭된 공고가 없을 때 메시지 HTML 생성"""
+        
+        # 사용자 선택 조건들 추출
+        target_jobs = [
+            user_data.get("희망 직무 1순위 (필수응답)", ""),
+            user_data.get("희망 직무 2순위 ", ""),
+            user_data.get("희망 직무 3순위 ", ""),
+        ]
+        target_jobs = [job.strip() for job in target_jobs if job.strip()]
+        
+        career_preference = user_data.get("찾고 계신 공고의 경력 조건을 선택해주세요.", "")
+        employment_types = user_data.get("희망 고용 형태 (복수선택)", "")
+        education_level = user_data.get("찾고 계신 공고의 학력 조건을 선택해주세요. (졸업예정자도 선택 가능, 복수선택)", "")
+
+        # 선택된 조건들을 문자열로 정리
+        conditions = []
+        if target_jobs:
+            conditions.append(f"직무: {', '.join(target_jobs)}")
+        if career_preference:
+            conditions.append(f"경력: {career_preference}")
+        if employment_types:
+            conditions.append(f"고용형태: {employment_types}")
+        if education_level:
+            conditions.append(f"학력: {education_level}")
+        
+        conditions_text = "<br>".join(conditions) if conditions else "선택하신 조건"
+
+        no_jobs_html = f"""
+        <!-- 매칭 결과 없음 메시지 -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+            <tr>
+                <td style="padding: 40px 20px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 16px;">😔</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #343a40; margin-bottom: 16px;">
+                        아쉽게도 조건에 맞는 채용공고를 찾지 못했습니다
+                    </div>
+                    <div style="font-size: 14px; color: #6c757d; line-height: 1.6; margin-bottom: 20px;">
+                        다음 조건으로 검색했습니다:<br>
+                        <div style="margin: 10px 0; padding: 15px; background-color: #ffffff; border-radius: 6px; text-align: left;">
+                            {conditions_text}
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; color: #495057; line-height: 1.6;">
+                        <strong>이런 방법을 시도해보세요:</strong><br>
+                        • 희망 직무 범위를 조금 더 넓혀보세요<br>
+                        • 다른 그룹사나 기업도 고려해보세요<br>
+                        • 경력 조건을 다시 확인해보세요<br>
+                        • 며칠 후 새로운 공고가 올라올 수 있으니 다시 확인해보세요
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <!-- 재검색 안내 -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 20px;">
+            <tr>
+                <td style="padding: 20px; background-color: #e3f2fd; border-radius: 8px;">
+                    <div style="font-size: 16px; font-weight: bold; color: #1565c0; margin-bottom: 8px;">
+                        💡 다시 도전해보세요!
+                    </div>
+                    <div style="font-size: 14px; color: #1976d2; line-height: 1.5;">
+                        조건을 조금 수정하여 다시 검색하거나, 며칠 후 새로운 채용공고가 업데이트되면 알려드릴게요.
+                    </div>
+                </td>
+            </tr>
+        </table>
+        """
+
+        return no_jobs_html
 
     def _generate_employment_tags(self, employment_type: str) -> str:
         """고용형태 태그 HTML 생성"""
@@ -201,36 +300,14 @@ class EmailTemplateGenerator:
             if deadline_date == "9999-12-31" or not deadline_date:
                 return {"date": "상시채용", "d_day": ""}
 
-            # 다양한 날짜 형식 처리
-            deadline = None
-
-            # 1. YYYY-MM-DD HH:MM 형식 (예: "2025-09-28 23:59")
-            if len(deadline_date) >= 16 and " " in deadline_date:
-                try:
-                    deadline = datetime.strptime(deadline_date, "%Y-%m-%d %H:%M")
-                except ValueError:
-                    # 초까지 있는 경우 (예: "2025-09-28 23:59:59")
-                    try:
-                        deadline = datetime.strptime(deadline_date, "%Y-%m-%d %H:%M:%S")
-                    except ValueError:
-                        pass
-
-            # 2. YYYY-MM-DD 형식 (예: "2025-09-28")
-            elif len(deadline_date) == 10:
-                try:
-                    deadline = datetime.strptime(deadline_date, "%Y-%m-%d")
-                except ValueError:
-                    pass
-
-            # 3. 파싱 실패한 경우
-            if deadline is None:
+            # 날짜 형식 처리
+            if len(deadline_date) == 10:  # YYYY-MM-DD
+                deadline = datetime.strptime(deadline_date, "%Y-%m-%d")
+            else:
                 return {"date": deadline_date, "d_day": ""}
 
-            # D-Day 계산 (날짜만 비교, 시간 무시)
-            today = datetime.now().date()
-            deadline_date_only = deadline.date()
-
-            diff = (deadline_date_only - today).days
+            today = datetime.now()
+            diff = (deadline - today).days
 
             if diff < 0:
                 return {"date": f'~{deadline.strftime("%y.%m.%d")}', "d_day": "(마감)"}
@@ -241,7 +318,6 @@ class EmailTemplateGenerator:
                     "date": f'~{deadline.strftime("%y.%m.%d")}',
                     "d_day": f"(D-{diff})",
                 }
-
         except Exception as e:
-            print(f"날짜 파싱 오류: {deadline_date}, 에러: {e}")
+            print(f"날짜 파싱 오류: {e}")
             return {"date": deadline_date, "d_day": ""}
