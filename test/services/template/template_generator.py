@@ -165,6 +165,105 @@ class EmailTemplateGenerator:
             cards_html += card_html
 
         return cards_html
+    
+    def generate_no_jobs_email(self, user_data: Dict) -> str:
+        """매칭된 채용공고가 없을 때 이메일 HTML 생성"""
+        with open(self.template_path, "r", encoding="utf-8") as f:
+            template = f.read()
+        
+        # 날짜 삽입
+        current_date = datetime.now().strftime("%Y년 %m월 %d일")
+        template = template.replace("2025.09.18", current_date)
+
+        # 사용자 이름 삽입
+        user_name = user_data.get("성함 ", "테스터").strip()
+        template = template.replace("테스터님", f"{user_name}님")
+
+        # 빈 결과 메시지 HTML 생성
+        no_jobs_html = self._generate_no_jobs_message(user_data)
+
+        # 기존 채용공고 섹션을 빈 결과 메시지로 교체
+        start_marker = "<!-- 하나카드 -->"
+        end_marker = "<!-- 피드백 섹션 -->"
+
+        start_idx = template.find(start_marker)
+        end_idx = template.find(end_marker)
+
+        if start_idx != -1 and end_idx != -1:
+            template = template[:start_idx] + no_jobs_html + template[end_idx:]
+
+        return template
+    
+    def _generate_no_jobs_message(self, user_data: Dict) -> str:
+        """매칭된 공고가 없을 때 메시지 HTML 생성"""
+        
+        # 사용자 선택 조건들 추출
+        target_jobs = [
+            user_data.get("희망 직무 1순위 (필수응답)", ""),
+            user_data.get("희망 직무 2순위 ", ""),
+            user_data.get("희망 직무 3순위 ", ""),
+        ]
+        target_jobs = [job.strip() for job in target_jobs if job.strip()]
+        
+        career_preference = user_data.get("찾고 계신 공고의 경력 조건을 선택해주세요.", "")
+        employment_types = user_data.get("희망 고용 형태 (복수선택)", "")
+        education_level = user_data.get("찾고 계신 공고의 학력 조건을 선택해주세요. (졸업예정자도 선택 가능, 복수선택)", "")
+
+        # 선택된 조건들을 문자열로 정리
+        conditions = []
+        if target_jobs:
+            conditions.append(f"직무: {', '.join(target_jobs)}")
+        if career_preference:
+            conditions.append(f"경력: {career_preference}")
+        if employment_types:
+            conditions.append(f"고용형태: {employment_types}")
+        if education_level:
+            conditions.append(f"학력: {education_level}")
+        
+        conditions_text = "<br>".join(conditions) if conditions else "선택하신 조건"
+
+        no_jobs_html = f"""
+        <!-- 매칭 결과 없음 메시지 -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+            <tr>
+                <td style="padding: 40px 20px; background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 24px; margin-bottom: 16px;">😔</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #343a40; margin-bottom: 16px;">
+                        아쉽게도 조건에 맞는 채용공고를 찾지 못했습니다
+                    </div>
+                    <div style="font-size: 14px; color: #6c757d; line-height: 1.6; margin-bottom: 20px;">
+                        다음 조건으로 검색했습니다:<br>
+                        <div style="margin: 10px 0; padding: 15px; background-color: #ffffff; border-radius: 6px; text-align: left;">
+                            {conditions_text}
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; color: #495057; line-height: 1.6;">
+                        <strong>이런 방법을 시도해보세요:</strong><br>
+                        • 희망 직무 범위를 조금 더 넓혀보세요<br>
+                        • 다른 그룹사나 기업도 고려해보세요<br>
+                        • 경력 조건을 다시 확인해보세요<br>
+                        • 며칠 후 새로운 공고가 올라올 수 있으니 다시 확인해보세요
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        <!-- 재검색 안내 -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 20px;">
+            <tr>
+                <td style="padding: 20px; background-color: #e3f2fd; border-radius: 8px;">
+                    <div style="font-size: 16px; font-weight: bold; color: #1565c0; margin-bottom: 8px;">
+                        💡 다시 도전해보세요!
+                    </div>
+                    <div style="font-size: 14px; color: #1976d2; line-height: 1.5;">
+                        조건을 조금 수정하여 다시 검색하거나, 며칠 후 새로운 채용공고가 업데이트되면 알려드릴게요.
+                    </div>
+                </td>
+            </tr>
+        </table>
+        """
+
+        return no_jobs_html
 
     def _generate_employment_tags(self, employment_type: str) -> str:
         """고용형태 태그 HTML 생성"""

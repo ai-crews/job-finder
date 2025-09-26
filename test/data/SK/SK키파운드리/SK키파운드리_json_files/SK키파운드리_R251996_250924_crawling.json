@@ -1,0 +1,28 @@
+[
+    {
+        "group_name": "SK",
+        "company_name": "SK키파운드리",
+        "job_title": "SK키파운드리 Data Science 담당자 채용",
+        "position_name": "DT",
+        "processed_position_name": "Data Scientist",
+        "min_experience_level": "신입",
+        "max_experience_level": "경력",
+        "employment_type": "정규직",
+        "min_education_level": "박사졸업",
+        "max_education_level": "박사졸업",
+        "application_start_date": "2025-09-19",
+        "application_deadline_date": "2025-12-31",
+        "application_deadline_time": "23:59:00",
+        "team_introduction": null,
+        "job_duties": "반도체 제조 AI 엔지니어링 과제 발굴 및 수행, AI 시스템 구축\n•\n요청사항 검토를 통한 과제 발굴 및 구체화\n•\n장비 및 공정 데이터 분석을 통한 이슈 해결\n•\n모델의 지속적 학습 및 최적화 운영\n구성원 Data Science 교육 및 현장 CDS (Citizen Data Science) 육성",
+        "qualifications": "대학교 AI Lab 박사 이상\n•\nAI 과제 진행 경험자 (M/L, D/L model serving 관련 기술 보유자)\n•\nData Engineering 관련 기술 보유\n•\n문제 해결을 위한 다양한 환경에서 도구, 언어 습득 역량\n언어 Skill 활용 역량 보유자\n•\nPython (데이터 분석 및 Backend 관련 Skill), SQL\n•\nMachine Learning Framework (TensorFlow, PyTorch, Keras)",
+        "preferred_qualifications": "관련 프로세스 또는 업무 경험 보유자\n•\nMachine Learning 또는 Deep learning\n•\nCI/CD 프로세스\n•\nFront End / Back End 개발",
+        "work_location": "충청 - 청주시 흥덕구 대신로 215",
+        "work_department": null,
+        "recruitment_process": "서류전형 <필기전형(SKCT)< 면접전형 < 채용검진 < 최종합격\n•\n모집 부문 별로 전형 절차가 변경 및 추가될 수 있습니다.",
+        "other_details": "기타사항\n입사지원 서류에 허위사실이 발견될 경우, 채용확정 이후라도 채용이 취소될 수 있습니다.\n입사지원서나 각종 서류에 타인의 영업비밀이나 영업비밀 침해로 오인 내지 우려될 만한 사항이 있는지 반드시 확인 하신 후 최종 제출하여 주시기 바랍니다.\n보훈대상자 및 장애인의 경우 관련 법령에 의거하여 우대합니다.\nAI 수행 과제의 포트폴리오 제출 필수입니다.\n\n입사지원 서류에 허위사실이 발견될 경우, 채용확정 이후라도 채용이 취소될 수 있습니다.\n입사지원서나 각종 서류에 타인의 영업비밀이나 영업비밀 침해로 오인 내지 우려될 만한 사항이 있는지 반드시 확인 하신 후 최종 제출하여 주시기 바랍니다.\n보훈대상자 및 장애인의 경우 관련 법령에 의거하여 우대합니다.",
+        "application_link": "https://www.skcareers.com/Recruit/Detail/R251996",
+        "image_filename": null,
+        "crawling_datetime": "2025-09-24 07:10:36"
+    }
+]

@@ -88,26 +88,27 @@ def main():
             matched_jobs = job_matcher.match_jobs_for_user(record)
 
             if not matched_jobs:
-                print(f"   ❌ 매칭되는 채용공고가 없습니다.")
-                results[user_email] = ("FAIL", "매칭되는 채용공고 없음")
-                fail_count += 1
-                continue
+                print(f"   ❌ 매칭되는 채용공고가 없습니다 - 안내 메일 발송")
+                # 매칭되는 공고가 없어도 안내 이메일 생성
+                personalized_html = template_generator.generate_no_jobs_email(record)
+                email_subject = f"📩 [JOB FINDER] {user_name}님, 조건에 맞는 공고 업데이트를 기다려주세요"
+            else:
+                print(f"   ✅ {len(matched_jobs)}개 채용공고 매칭됨")
+                
+                # 매칭된 공고 정보 출력
+                preferred_companies = [
+                    job["job"]["company_name"]
+                    for job in matched_jobs
+                    if job["is_preferred_company"]
+                ]
+                if preferred_companies:
+                    print(f"   ⭐ 희망기업: {', '.join(preferred_companies[:3])}")
 
-            print(f"   ✅ {len(matched_jobs)}개 채용공고 매칭됨")
-
-            # 매칭된 공고 정보 출력
-            preferred_companies = [
-                job["job"]["company_name"]
-                for job in matched_jobs
-                if job["is_preferred_company"]
-            ]
-            if preferred_companies:
-                print(f"   ⭐ 희망기업: {', '.join(preferred_companies[:3])}")
-
-            # 개인화된 이메일 템플릿 생성
-            personalized_html = template_generator.generate_personalized_email(
-                record, matched_jobs
-            )
+                # 개인화된 이메일 템플릿 생성
+                personalized_html = template_generator.generate_personalized_email(
+                    record, matched_jobs
+                )
+                email_subject = f"📩 [JOB FINDER] {user_name}님 맞춤 채용공고 도착!"
 
             # 임시 파일에 저장
             with tempfile.NamedTemporaryFile(
@@ -116,10 +117,10 @@ def main():
                 temp_file.write(personalized_html)
                 temp_file_path = temp_file.name
 
-            # 이메일 발송
+            # 이메일 발송 (공고가 있든 없든 발송)
             result = send_emails_with_gmail_api(
                 email_list=[user_email],
-                subject=f"📩 [JOB FINDER] {user_name}님 맞춤 채용공고 도착!",
+                subject=email_subject,
                 html_file_path=temp_file_path,
             )
 
@@ -132,10 +133,13 @@ def main():
                 results[user_email] = (status, error)
                 if status == "SUCCESS":
                     success_count += 1
-                    print(f"📤 이메일 발송 성공!")
+                    if matched_jobs:
+                        print(f"   📤 맞춤 공고 이메일 발송 성공!")
+                    else:
+                        print(f"   📤 안내 이메일 발송 성공!")
                 else:
                     fail_count += 1
-                    print(f"이메일 발송 실패: {error}")
+                    print(f"   ❌ 이메일 발송 실패: {error}")
 
             # API 제한을 피하기 위한 잠시 대기
             if i % 10 == 0:  # 10명마다 잠시 대기
@@ -143,11 +147,9 @@ def main():
                 time.sleep(2)
 
         except Exception as e:
-            print(f"처리 실패: {e}")
+            print(f"   ❌ 처리 실패: {e}")
             results[user_email] = ("FAIL", str(e))
             fail_count += 1
-
-        print()  # 빈 줄 추가
 
     # 5. 결과를 시트에 기록
     print("📝 발송 결과를 시트에 기록 중...")
