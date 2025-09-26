@@ -30,17 +30,27 @@ class JobMatcher:
             "카카오": ["카카오","Kakao"],
         }
         return mapping
-
+    
     def _load_all_job_data(self) -> List[Dict]:
         """모든 채용공고 JSON 파일 로드"""
         job_data = []
+        print(f"데이터 폴더 경로: {self.data_folder}")
+        
         for root, dirs, files in os.walk(self.data_folder):
+            print(f"탐색 중인 폴더: {root}")
+            print(f"하위 폴더들: {dirs}")
+            print(f"파일들: {files}")
+            
             for filename in files:
                 if filename.endswith(".json"):
                     file_path = os.path.join(root, filename)
+                    print(f"JSON 파일 로딩 시도: {file_path}")
                     try:
                         with open(file_path, "r", encoding="utf-8") as f:
                             data = json.load(f)
+                            company_name = data.get("company_name", "")
+                            print(f"  성공: 회사명={company_name}")
+                            
                             if "company_name" not in data or not data["company_name"]:
                                 company_from_filename = (
                                     self._extract_company_from_filename(filename)
@@ -49,9 +59,12 @@ class JobMatcher:
                                     data["company_name_from_file"] = (
                                         company_from_filename
                                     )
+                                    print(f"  파일명에서 추출한 회사명: {company_from_filename}")
                             job_data.append(data)
                     except Exception as e:
                         print(f"파일 로드 실패 {filename}: {e}")
+        
+        print(f"총 로드된 공고 수: {len(job_data)}")
         return job_data
 
     def _extract_company_from_filename(self, filename: str) -> str:
@@ -220,7 +233,7 @@ class JobMatcher:
                 filtered_jobs.append(job)
         return filtered_jobs
 
-    def match_jobs_for_user(self, user_data: Dict, top_n: int = 10) -> List[Dict]:
+    def match_jobs_for_user(self, user_data: Dict, top_n: int = 100) -> List[Dict]:
         """사용자에게 맞는 채용공고 매칭"""
         print("=== 필터링 시작 ===")
 
@@ -228,8 +241,8 @@ class JobMatcher:
         target_companies = self._extract_target_companies(user_data)
         target_jobs = [
             user_data.get("희망 직무 1순위 (필수응답)", ""),
-            user_data.get("희망 직무 2순위 ", ""),  # 공백 포함!
-            user_data.get("희망 직무 3순위 ", ""),  # 공백 포함!
+            user_data.get("희망 직무 2순위 ", ""),
+            user_data.get("희망 직무 3순위 ", ""),
         ]
         target_jobs = [job.strip() for job in target_jobs if job.strip()]
         target_employment_types = self._parse_employment_types(
@@ -262,12 +275,11 @@ class JobMatcher:
         other_jobs = []
 
         for job in final_jobs:
-            company_name = job.get("company_name", "") or job.get(
-                "company_name_from_file", ""
-            )
-            if self.is_preferred_company(target_companies, company_name):
+            company_name = job.get("company_name", "") or job.get("company_name_from_file", "")
+            is_preferred = self.is_preferred_company(target_companies, company_name)
+            
+            if is_preferred:
                 preferred_jobs.append(job)
-                print(f"희망기업 매칭: {company_name}")
             else:
                 other_jobs.append(job)
 
