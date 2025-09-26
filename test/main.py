@@ -53,6 +53,9 @@ def main():
 
         if "신입" in career_preference and user_email and "@" in user_email:
             target_records.append(record)
+            
+    # 테스트용으로 1명만 처리
+    #target_records = target_records[:1]
 
     print(f"🎯 신입 공고 희망자: {len(target_records)}명")
 
