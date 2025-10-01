@@ -55,6 +55,17 @@ class EmailTemplateGenerator:
 
         template = template.replace("테스터님", f"{user_name}님")
 
+        # 날짜 삽입
+        current_date = datetime.now().strftime("%Y년 %m월 %d일")
+        template = template.replace("2025.09.18", current_date)
+
+        # 월주차 삽입
+        current_week = (datetime.now().day - 1) // 7 + 1
+        current_month = datetime.now().month
+        template = template.replace(
+            "9월 3주차", f"{current_month}월 {current_week}주차"
+        )
+
         # 채용공고 섹션 생성
         job_cards_html = self._generate_job_cards(matched_jobs)
 
