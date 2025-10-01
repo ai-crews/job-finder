@@ -12,28 +12,36 @@ class EmailTemplateGenerator:
         """회사 로고 URL 매핑"""
         return {
             "삼성": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
-            "삼성전자": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
-            "삼성SDS": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
             "SK": "https://www.sk.co.kr/lib/images/desktop/about/ci-color-img01_lg.png",
             "LG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/LG_logo_%282014%29.svg/1200px-LG_logo_%282014%29.svg.png",
             "쿠팡": "https://news.coupang.com/wp-content/uploads/2023/01/coupang-bi-brand-logo-230109-01.jpg",
             "카카오": "https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/mediakit/47e79e4a019300001.png",
             "네이버": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Naver_Logotype.svg/2560px-Naver_Logotype.svg.png",
             "NAVER": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Naver_Logotype.svg/2560px-Naver_Logotype.svg.png",
-            "하나카드": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
-            "하나은행": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
+            "하나": "https://www.hanafn.com/assets/img/ko/info/img-hana-symbol.png",
             "두산": "https://www.doosanrobotics.com/images/sns-img.png",
-            "현대모비스": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Hyundai_Mobis_Logo.svg/512px-Hyundai_Mobis_Logo.svg.png",
+            "현대": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Hyundai_Mobis_Logo.svg/512px-Hyundai_Mobis_Logo.svg.png",
             "신한은행": "https://www.shinhanci.co.kr/img/sub/img_ci.png?cache=none",
             "KB증권": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGdoaWcmoWpggvou-q3kjJzna4pIg5c4LvGQ&s",
-            "현대해상": "https://mblogthumb-phinf.pstatic.net/20160728_259/ppanppane_1469695930418AMF3t_PNG/%C7%F6%B4%EB%C7%D8%BB%F3_%B7%CE%B0%ED_%284%29.png?type=w800",
             "토스": "https://framerusercontent.com/images/EhEElRcoy4v5Y9uyUj3XkTWg.jpg",
             "우아한형제들": "https://woowahan-cdn.woowahan.com/static/image/share_kor.jpg",
             "셀트리온": "https://www.celltrion.com/front/assets/common/images/introduce/img_brand_symbol.png",
-            "현대자동차": "https://www.hyundai.com/content/dam/hyundai/kr/ko/images/common/sns/og-image-hyundai-motors.jpg",
-            "카카오뱅크": "https://daoift3qrrnil.cloudfront.net/company_groups/images/000/004/699/original/img_%285%29.png?1700663411",
             "기아": "https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2021%2F01%2Fkia-motors-new-logo-brand-slogan-officially-revealed-01.jpg?q=75&w=800&cbr=1&fit=max",
         }
+
+    def _get_company_logo(self, company_name: str) -> str:
+        """회사명으로 로고 URL 찾기 (부분 매칭)"""
+        # 1. 정확한 매칭 먼저 시도 (삼성전자 == 삼성전자)
+        if company_name in self.company_logos:
+            return self.company_logos[company_name]
+
+        # 2. 정확한 매칭이 없으면 부분 매칭 (삼성 in 삼성전자)
+        for key, logo_url in self.company_logos.items():
+            if key in company_name:
+                return logo_url
+
+        # 3. 매칭 실패 시 기본 이미지
+        return "https://via.placeholder.com/68x113?text=Logo"
 
     def generate_personalized_email(
         self, user_data: Dict, matched_jobs: List[Dict]
@@ -80,11 +88,9 @@ class EmailTemplateGenerator:
                 job.get("employment_type", "확인불가")
             )
 
-            # 회사 로고 URL
+            # 회사 로고 URL - 부분 매칭 적용
             company_name = job["company_name"]
-            logo_url = self.company_logos.get(
-                company_name, "https://via.placeholder.com/68x113?text=Logo"
-            )
+            logo_url = self._get_company_logo(company_name)
 
             # 희망기업 표시
             star_icon = "⭐️ " if is_preferred else ""
@@ -165,12 +171,12 @@ class EmailTemplateGenerator:
             cards_html += card_html
 
         return cards_html
-    
+
     def generate_no_jobs_email(self, user_data: Dict) -> str:
         """매칭된 채용공고가 없을 때 이메일 HTML 생성"""
         with open(self.template_path, "r", encoding="utf-8") as f:
             template = f.read()
-        
+
         # 날짜 삽입
         current_date = datetime.now().strftime("%Y년 %m월 %d일")
         template = template.replace("2025.09.18", current_date)
@@ -193,10 +199,10 @@ class EmailTemplateGenerator:
             template = template[:start_idx] + no_jobs_html + template[end_idx:]
 
         return template
-    
+
     def _generate_no_jobs_message(self, user_data: Dict) -> str:
         """매칭된 공고가 없을 때 메시지 HTML 생성"""
-        
+
         # 사용자 선택 조건들 추출
         target_jobs = [
             user_data.get("희망 직무 1순위 (필수응답)", ""),
@@ -204,10 +210,15 @@ class EmailTemplateGenerator:
             user_data.get("희망 직무 3순위 ", ""),
         ]
         target_jobs = [job.strip() for job in target_jobs if job.strip()]
-        
-        career_preference = user_data.get("찾고 계신 공고의 경력 조건을 선택해주세요.", "")
+
+        career_preference = user_data.get(
+            "찾고 계신 공고의 경력 조건을 선택해주세요.", ""
+        )
         employment_types = user_data.get("희망 고용 형태 (복수선택)", "")
-        education_level = user_data.get("찾고 계신 공고의 학력 조건을 선택해주세요. (졸업예정자도 선택 가능, 복수선택)", "")
+        education_level = user_data.get(
+            "찾고 계신 공고의 학력 조건을 선택해주세요. (졸업예정자도 선택 가능, 복수선택)",
+            "",
+        )
 
         # 선택된 조건들을 문자열로 정리
         conditions = []
@@ -219,7 +230,7 @@ class EmailTemplateGenerator:
             conditions.append(f"고용형태: {employment_types}")
         if education_level:
             conditions.append(f"학력: {education_level}")
-        
+
         conditions_text = "<br>".join(conditions) if conditions else "선택하신 조건"
 
         no_jobs_html = f"""
