@@ -15,47 +15,74 @@ from datetime import datetime
 load_dotenv()
 
 
-def save_detailed_matching_results(matching_data, filename="detailed_matching_results.csv"):
+def save_detailed_matching_results(
+    matching_data, filename="detailed_matching_results_1004.csv"
+):
     """상세한 매칭 결과 저장 - 각 공고별로 한 줄씩"""
     if not matching_data:
         return
-    
+
     os.makedirs("reports", exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filepath = f"reports/{filename.replace('.csv', '')}_{timestamp}.csv"
-    
-    with open(filepath, 'w', newline='', encoding='utf-8-sig') as f:
+
+    with open(filepath, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.writer(f)
-        writer.writerow([
-            '사용자_이메일', '사용자_이름', '회사명', '희망기업_여부', '모집부문', '직무명', 
-            '고용형태', '최소학력', '최소경력', '접수마감일', '지원링크'
-        ])
-        
+        writer.writerow(
+            [
+                "사용자_이메일",
+                "사용자_이름",
+                "회사명",
+                "희망기업_여부",
+                "모집부문",
+                "직무명",
+                "고용형태",
+                "최소학력",
+                "최소경력",
+                "접수마감일",
+                "지원링크",
+            ]
+        )
+
         for data in matching_data:
-            if not data['matched_jobs']:
+            if not data["matched_jobs"]:
                 # 매칭된 공고가 없는 경우
-                writer.writerow([
-                    data['user_email'], data['user_name'], '매칭된 공고 없음', 
-                    'N/A', '', '', '', '', '', '', ''
-                ])
+                writer.writerow(
+                    [
+                        data["user_email"],
+                        data["user_name"],
+                        "매칭된 공고 없음",
+                        "N/A",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                    ]
+                )
             else:
                 # 각 매칭된 공고별로 행 생성
-                for job_info in data['matched_jobs']:
+                for job_info in data["matched_jobs"]:
                     job = job_info["job"]
-                    writer.writerow([
-                        data['user_email'],
-                        data['user_name'],
-                        job.get("company_name", "") or job.get("company_name_from_file", ""),
-                        "예" if job_info["is_preferred_company"] else "아니오",
-                        job.get("position_name", "미확인"),
-                        job.get("processed_position_name", "미분류"),
-                        job.get("employment_type", "확인불가"),
-                        job.get("min_education_level", "확인불가"),
-                        job.get("min_experience_level", "확인불가"),
-                        job.get("application_deadline_date", "미확인"),
-                        job.get("application_link", "")
-                    ])
-    
+                    writer.writerow(
+                        [
+                            data["user_email"],
+                            data["user_name"],
+                            job.get("company_name", "")
+                            or job.get("company_name_from_file", ""),
+                            "예" if job_info["is_preferred_company"] else "아니오",
+                            job.get("position_name", "미확인"),
+                            job.get("processed_position_name", "미분류"),
+                            job.get("employment_type", "확인불가"),
+                            job.get("min_education_level", "확인불가"),
+                            job.get("min_experience_level", "확인불가"),
+                            job.get("application_deadline_date", "미확인"),
+                            job.get("application_link", ""),
+                        ]
+                    )
+
     print(f"📊 상세 매칭 결과 저장 완료: {filepath}")
     return filepath
 
@@ -65,7 +92,7 @@ def main():
     # 환경변수 확인
     SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
     WORKSHEET_NAME = os.getenv("WORKSHEET_NAME", "설문지 응답 시트1")
-    DATA_FOLDER = "data"
+    DATA_FOLDER = "job-finder-data"
     TEMPLATE_PATH = "template/test_email.html"
 
     if not SPREADSHEET_ID:
@@ -100,7 +127,7 @@ def main():
 
         if "신입" in career_preference and user_email and "@" in user_email:
             target_records.append(record)
-    
+
     print(f"🎯 신입 공고 희망자: {len(target_records)}명")
 
     if not target_records:
@@ -138,11 +165,13 @@ def main():
             matched_jobs = job_matcher.match_jobs_for_user(record)
 
             # CSV용 데이터 저장 (필수 정보만)
-            matching_csv_data.append({
-                'user_email': user_email,
-                'user_name': user_name,
-                'matched_jobs': matched_jobs
-            })
+            matching_csv_data.append(
+                {
+                    "user_email": user_email,
+                    "user_name": user_name,
+                    "matched_jobs": matched_jobs,
+                }
+            )
 
             if not matched_jobs:
                 print(f"   ❌ 매칭되는 채용공고가 없습니다 - 안내 메일 발송")
@@ -151,7 +180,7 @@ def main():
                 email_subject = f"📩 [JOB FINDER] {user_name}님, 조건에 맞는 공고 업데이트를 기다려주세요"
             else:
                 print(f"   ✅ {len(matched_jobs)}개 채용공고 매칭됨")
-                
+
                 # 매칭된 공고 정보 출력
                 preferred_companies = [
                     job["job"]["company_name"]
@@ -207,13 +236,11 @@ def main():
             print(f"   ❌ 처리 실패: {e}")
             results[user_email] = ("FAIL", str(e))
             fail_count += 1
-            
+
             # 실패한 경우도 CSV에 기록
-            matching_csv_data.append({
-                'user_email': user_email,
-                'user_name': user_name,
-                'matched_jobs': []
-            })
+            matching_csv_data.append(
+                {"user_email": user_email, "user_name": user_name, "matched_jobs": []}
+            )
 
     # 5. 결과를 시트에 기록
     print("📝 발송 결과를 시트에 기록 중...")
