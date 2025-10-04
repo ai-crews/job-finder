@@ -12,7 +12,9 @@ class EmailTemplateGenerator:
         """회사 로고 URL 매핑"""
         return {
             "삼성": "https://images.samsung.com/kdp/aboutsamsung/brand_identity/logo/720_600_1.png?$720_N_PNG$",
-            "SK": "https://www.sk.co.kr/lib/images/desktop/about/ci-color-img01_lg.png",
+            "SK": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/SK_logo.svg/1200px-SK_logo.svg.png",
+            "마이다스": "https://framerusercontent.com/images/VoZfoTX08Ksf8cP3yH1wJlRh6AI.png",
+            "MOCOCO": "https://cdn.prod.website-files.com/6237fca0466ffd9274a1dbdd/6544ad7675a308ab53b4c354_Moloco_logo_Horiz_Primary%201.webp",
             "LG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/LG_logo_%282014%29.svg/1200px-LG_logo_%282014%29.svg.png",
             "쿠팡": "https://news.coupang.com/wp-content/uploads/2023/01/coupang-bi-brand-logo-230109-01.jpg",
             "카카오": "https://t1.kakaocdn.net/kakaocorp/kakaocorp/admin/mediakit/47e79e4a019300001.png",
@@ -27,8 +29,15 @@ class EmailTemplateGenerator:
             "우아한형제들": "https://woowahan-cdn.woowahan.com/static/image/share_kor.jpg",
             "셀트리온": "https://www.celltrion.com/front/assets/common/images/introduce/img_brand_symbol.png",
             "기아": "https://image-cdn.hypb.st/https%3A%2F%2Fkr.hypebeast.com%2Ffiles%2F2021%2F01%2Fkia-motors-new-logo-brand-slogan-officially-revealed-01.jpg?q=75&w=800&cbr=1&fit=max",
-            "CJ": "https://upload.wikimedia.org/wikipedia/commons/8/89/CJ_logo.svg",
-            "AXZ": "https://career.axzcorp.com/_next/image?url=https%3A%2F%2Fimage.ninehire.com%2Fbrand%2F0d7a4450-2ad6-11f0-967f-d5658b439dd4%2Fca41ab00-5d30-11f0-815e-b5e17a740b62.png&w=3840&q=75",
+            "대한항공": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTM77KeeDBPkwp7Ifj8Gun5-4LIh1BEYichQ&s",
+            "kb손해보험": "https://www.kbinsure.co.kr/extrnl/image/common/kakao_ci_800.png",
+            "LG유플러스": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/LG_U%2B_CI.svg/1280px-LG_U%2B_CI.svg.png",
+            "교보생명": "https://www.kyobo.com/dgt/web/mobile/common/img/abt/ci_wordmark.png",
+            "한국투자신탁운용": "https://kim.koreainvestment.com/logo.png",
+            "웹젠": "https://upload.wikimedia.org/wikipedia/commons/2/2d/WEBZEN%28RED%29.png",
+            "upstage": "https://cdn.prod.website-files.com/6743d5190bb2b52f38e99e37/6743f4952ba17ea80e5a7a13_Logo_Light.png",
+            "포스코": "https://www.posco.co.kr/docs/kor7/jsp/resources/images/company/posco_ci_sec_01_obj1.jpg",
+            "NICE평가정보": "https://www.niceinfo.co.kr/images/sub/ci_img_02_wh.gif",
         }
 
     def _get_company_logo(self, company_name: str) -> str:
@@ -49,18 +58,12 @@ class EmailTemplateGenerator:
         self, user_data: Dict, matched_jobs: List[Dict]
     ) -> str:
         """개인화된 이메일 HTML 생성"""
-        # 채용공고 카드 생성 (필터링 포함)
-        job_cards_html = self._generate_job_cards(matched_jobs)
-
-        # 필터링 후 표시될 공고가 없으면 no_jobs 이메일 반환
-        if not job_cards_html.strip():
-            return self.generate_no_jobs_email(user_data)
-
         with open(self.template_path, "r", encoding="utf-8") as f:
             template = f.read()
 
         # 사용자 이름 삽입
         user_name = user_data.get("성함 ", "테스터").strip()
+
         template = template.replace("테스터님", f"{user_name}님")
 
         # 날짜 삽입
@@ -73,6 +76,9 @@ class EmailTemplateGenerator:
         template = template.replace(
             "9월 3주차", f"{current_month}월 {current_week}주차"
         )
+
+        # 채용공고 섹션 생성
+        job_cards_html = self._generate_job_cards(matched_jobs)
 
         # 기존 채용공고 섹션을 새로운 것으로 교체
         start_marker = "<!-- 하나카드 -->"
@@ -94,23 +100,10 @@ class EmailTemplateGenerator:
             job = job_info["job"]
             is_preferred = job_info["is_preferred_company"]
 
-            # processed_position_name에 "경력" 단어가 있으면 건너뛰기
-            processed_position_name = job.get("processed_position_name", "")
-            exclude_keywords = ["Infra", "Backend", "서비스기획", "경력", ""]
-            if any(keyword in processed_position_name for keyword in exclude_keywords):
-                continue
-
-            # qualifications에 경력 요구사항이 있으면 건너뛰기
-            qualifications = job.get("qualifications", "")
-            if self._has_experience_requirement(qualifications):
-                continue
-
             # 마감일 계산
             deadline_info = self._calculate_deadline(
                 job.get("application_deadline_date", "")
             )
-            if deadline_info["d_day"] == "(마감)":
-                continue
 
             # 고용형태 태그 생성
             employment_tags = self._generate_employment_tags(
@@ -213,13 +206,6 @@ class EmailTemplateGenerator:
         # 사용자 이름 삽입
         user_name = user_data.get("성함 ", "테스터").strip()
         template = template.replace("테스터님", f"{user_name}님")
-
-        # 월주차 삽입
-        current_week = (datetime.now().day - 1) // 7 + 1
-        current_month = datetime.now().month
-        template = template.replace(
-            "9월 3주차", f"{current_month}월 {current_week}주차"
-        )
 
         # 빈 결과 메시지 HTML 생성
         no_jobs_html = self._generate_no_jobs_message(user_data)
@@ -354,7 +340,7 @@ class EmailTemplateGenerator:
                 return {"date": deadline_date, "d_day": ""}
 
             today = datetime.now()
-            diff = (deadline - today).days
+            diff = (deadline - today).days + 1
 
             if diff < 0:
                 return {"date": f'~{deadline.strftime("%y.%m.%d")}', "d_day": "(마감)"}
@@ -368,25 +354,3 @@ class EmailTemplateGenerator:
         except Exception as e:
             print(f"날짜 파싱 오류: {e}")
             return {"date": deadline_date, "d_day": ""}
-
-    def _has_experience_requirement(self, qualifications: str) -> bool:
-        """자격요건에 경력 요구사항이 있는지 확인"""
-        if not qualifications:
-            return False
-
-        import re
-
-        # "N년 이상", "N년이상", "N년~N년" 같은 패턴 찾기
-        experience_patterns = [
-            r"\d+년\s*이상",  # "3년 이상", "5년이상"
-            r"\d+년\s*~\s*\d+년",  # "3년~5년", "3년 ~ 5년"
-            r"경험\s*\d+년",  # "경험 3년", "경험3년"
-            r"경력\s*\d+년",  # "경력 3년", "경험3년"
-            r"\d+\s*years?\s*(or\s*more|이상)",  # "3 years or more"
-        ]
-
-        for pattern in experience_patterns:
-            if re.search(pattern, qualifications):
-                return True
-
-        return False

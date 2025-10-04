@@ -16,7 +16,7 @@ load_dotenv()
 
 
 def save_detailed_matching_results(
-    matching_data, filename="detailed_matching_results_1004.csv"
+    matching_data, filename="detailed_matching_results.csv"
 ):
     """상세한 매칭 결과 저장 - 각 공고별로 한 줄씩"""
     if not matching_data:
@@ -92,7 +92,7 @@ def main():
     # 환경변수 확인
     SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
     WORKSHEET_NAME = os.getenv("WORKSHEET_NAME", "설문지 응답 시트1")
-    DATA_FOLDER = "job-finder-data"
+    DATA_FOLDER = "data-1004"
     TEMPLATE_PATH = "template/test_email.html"
 
     if not SPREADSHEET_ID:
