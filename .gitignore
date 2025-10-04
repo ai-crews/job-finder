@@ -209,6 +209,9 @@ __marimo__/
 
 #Gmail API 이메일 발송
 credentials.json
+real_credentials.json
+
 token.json
 gmail_token.pickle
 sheets_token.pickle
+test/reports/*
