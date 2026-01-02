@@ -62,8 +62,8 @@ job-finder/test/
 
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/your-username/job-finder-dev.git
-cd job-finder-dev
+git clone https://github.com/your-username/job-finder.git
+cd job-finder/test
 
 # 2. 가상환경 생성 (권장)
 python -m venv venv
