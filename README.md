@@ -15,7 +15,7 @@ Google 설문지를 통해 수집한 구직자 데이터를 분석하여, 각 �
 ## 프로젝트 구조
 
 ```
-job-finder-dev/
+job-finder/test/
 ├── main.py                          # 메인 실행 파일
 ├── requirements.txt                 # 패키지 의존성
 ├── .env                            # 환경 변수 설정 (보안)
